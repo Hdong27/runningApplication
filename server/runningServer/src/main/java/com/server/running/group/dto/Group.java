@@ -14,7 +14,7 @@ public class Group {
 	// 기본키
 	@Column
 	@Id
-	private Integer num;
+	private Integer id;
 	
 	// 그룹명
 	@Column

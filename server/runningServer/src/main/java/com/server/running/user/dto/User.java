@@ -14,11 +14,11 @@ public class User {
 	// 기본키
 	@Column
 	@Id
-	private Integer num;
+	private Integer id;
 	
 	// 아이디
 	@Column
-	private String id;
+	private String userId;
 	
 	// 비밀번호
 	@Column

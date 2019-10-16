@@ -14,7 +14,7 @@ public class RelationUserPlan {
 	// 기본키
 	@Column
 	@Id
-	private Integer num;
+	private Integer id;
 	
 	// 유저 번호
 	@Column

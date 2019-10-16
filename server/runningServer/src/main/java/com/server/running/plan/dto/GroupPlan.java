@@ -14,7 +14,7 @@ public class GroupPlan {
 	// 기본키
 	@Column
 	@Id
-	private Integer num;
+	private Integer id;
 	
 	// 플랜명
 	@Column

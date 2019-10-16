@@ -14,7 +14,7 @@ public class RelationGroupPlan {
 	// 기본키
 	@Column
 	@Id
-	private Integer num;
+	private Integer id;
 	
 	// 그룹 번호
 	@Column

@@ -14,7 +14,7 @@ public class UserPlan {
 	// 기본키
 	@Column
 	@Id
-	private Integer num;
+	private Integer id;
 	
 	// 플랜명
 	@Column
