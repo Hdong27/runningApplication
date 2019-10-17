@@ -1,9 +1,12 @@
 package com.server.running.user.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -17,6 +20,13 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 	@Autowired
 	private UserService userService;
+	
+	// test
+	@GetMapping("/test")
+	public ResponseEntity<String> androidTest(HttpServletRequest request) {
+		System.out.println("android Test");
+		return new ResponseEntity<String>("수신 완료", HttpStatus.OK);
+	}
 	
 	// 회원가입
 	@PostMapping("/signup.run")
