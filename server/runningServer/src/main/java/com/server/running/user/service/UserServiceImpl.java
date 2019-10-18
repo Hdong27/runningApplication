@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
 	// 회원가입
 	@Override
 	public boolean signup(User user) {
-		Optional<User> maybeUser = userRepository.findByUserId(user.getUserId());
+		Optional<User> maybeUser = userRepository.findByEmail(user.getEmail());
 		if(maybeUser.isPresent()) {
 			// 중복된 아이디가 있음
 			return false;
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
 	// 로그인
 	@Override
 	public User login(User user) {
-		Optional<User> maybeUser = userRepository.findByUserId(user.getUserId());
+		Optional<User> maybeUser = userRepository.findByEmail(user.getEmail());
 		if(maybeUser.isPresent() && 
 				new SecurityUtil().encodeSHA256(user.getPassword()).equals(maybeUser.get().getPassword())) {
 			// 아이디가 있음
@@ -46,7 +46,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User updateUser(User user) {
 		userRepository.save(user);
-		Optional<User> maybeUser = userRepository.findByUserId(user.getUserId());
+		Optional<User> maybeUser = userRepository.findByEmail(user.getEmail());
 		return maybeUser.get();
 	}
 	

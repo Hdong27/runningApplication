@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.server.running.group.dto.Group;
+import com.server.running.group.dto.UserGroup;
 import com.server.running.group.service.GroupService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,9 +20,9 @@ public class GroupController {
 	
 	// 그룹 생성
 	@PostMapping("/createTeam.run")
-	public ResponseEntity<String> createTeam(@RequestBody Group group) {
+	public ResponseEntity<UserGroup> createTeam(@RequestBody UserGroup userGroup) {
 		log.debug("그룹 생성 요청");
-		return new ResponseEntity<String>("", HttpStatus.OK);
+		return new ResponseEntity<UserGroup>(groupService.test(userGroup), HttpStatus.OK);
 	}
 	
 	// 그룹 수정
