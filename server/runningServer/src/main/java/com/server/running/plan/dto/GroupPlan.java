@@ -25,5 +25,9 @@ public class GroupPlan {
 	
 	// 목표 거리
 	@Column
-	private Double dir;
+	private Double distanceTarget;
+	
+	// 그룹 번호
+	@Column
+	private Integer groupId;
 }

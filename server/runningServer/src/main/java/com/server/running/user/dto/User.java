@@ -1,11 +1,27 @@
 package com.server.running.user.dto;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.server.running.group.dto.Group;
+import com.server.running.plan.dto.UserPlan;
+import com.server.running.running.dto.Running;
 
 import lombok.Data;
 
@@ -17,14 +33,36 @@ public class User {
 	@Column
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private Integer uid;
 	
 	// 아이디
 	@Column
-	private String userId;
+	private String email;
 	
 	// 비밀번호
 	@Column
 	private String password;
 	
+	// 유저의 플랜 리스트
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="userId")
+	private List<UserPlan> userPlans;
+	
+	// 유저의 그룹 리스트
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Group> groups;
+	
+	// 유저의 러닝 데이터 리스트
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "userId")
+	private List<Running> runningData;
+	
+	// 그룹 추가(relationship)
+	public boolean addGroups(Group group) {
+		if(groups == null) {
+			groups = new ArrayList<>();
+		}
+		return groups.add(group);
+	}
 }
