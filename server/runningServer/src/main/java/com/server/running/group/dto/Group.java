@@ -61,4 +61,15 @@ public class Group {
 		}
 		return users.add(user);
 	}
+	
+	// 유저 제거(relationship)
+	public int deleteUsers(User user) {
+		for (int i = 0; i < users.size(); i++) {
+			if(users.get(i).getUid() == user.getUid()) {
+				users.remove(i);
+				break;
+			}
+		}
+		return users.size();
+	}
 }

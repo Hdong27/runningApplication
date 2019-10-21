@@ -1,6 +1,7 @@
 package com.server.running.group.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -38,18 +39,28 @@ public class GroupServiceImpl implements GroupService {
 	
 	// 그룹에 참가
 	@Override
-	public Boolean joinTeam(Group group) {
-		return null;
+	public Boolean joinTeam(UserGroup userGroup) {
+		Optional<Group> maybeGroup = groupRepository.findById(userGroup.getGroup().getGid());
+		maybeGroup.get().addUsers(userGroup.getUser());
+		groupRepository.save(maybeGroup.get());
+		return true;
 	}
 	
 	// 그룹 탈퇴
 	@Override
-	public Boolean outTeam(Group group) {
-		return null;
+	public Boolean outTeam(UserGroup userGroup) {
+		Optional<Group> maybeGroup = groupRepository.findById(userGroup.getGroup().getGid());
+		int size = maybeGroup.get().deleteUsers(userGroup.getUser());
+		if(size > 0) {
+			groupRepository.save(maybeGroup.get());
+		} else {
+			groupRepository.delete(maybeGroup.get());
+		}
+		return true;
 	}
 
 	@Override
-	public List<Group> test() {
+	public List<Group> findAllTeam() {
 		return groupRepository.findAll();
 	}
 }

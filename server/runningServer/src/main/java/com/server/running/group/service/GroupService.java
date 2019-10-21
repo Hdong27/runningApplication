@@ -16,11 +16,11 @@ public interface GroupService {
 	public Boolean deleteTeam(Group group);
 	
 	// 그룹에 참가
-	public Boolean joinTeam(Group group);
+	public Boolean joinTeam(UserGroup userGroup);
 	
 	// 그룹 탈퇴
-	public Boolean outTeam(Group group);
+	public Boolean outTeam(UserGroup userGroup);
 	
-	// 테스트
-	public List<Group> test();
+	// 전체 그룹 정보 조회
+	public List<Group> findAllTeam();
 }
