@@ -17,7 +17,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.server.running.plan.dto.GroupPlan;
 import com.server.running.user.dto.User;
 
@@ -43,6 +47,7 @@ public class Group {
 	private List<GroupPlan> groupPlans;
 	
 	// 그룹의 유저 리스트
+	@JsonIgnoreProperties("groups")
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
 	@JoinTable(name = "userGroup", 
 				joinColumns = @JoinColumn(name = "gid"),

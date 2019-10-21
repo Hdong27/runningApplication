@@ -1,7 +1,6 @@
 package com.server.running.group.service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.server.running.group.dto.Group;
 import com.server.running.group.dto.UserGroup;
 import com.server.running.group.repository.GroupRepository;
-import com.server.running.user.dto.User;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -18,10 +16,9 @@ public class GroupServiceImpl implements GroupService {
 	
 	// 그룹 생성
 	@Override
-	public Boolean createTeam(Group group, User user) {
-		groupRepository.save(group);
-		group.addUsers(user);
-		user.addGroups(group);
+	public Boolean createTeam(UserGroup userGroup) {
+		userGroup.getGroup().addUsers(userGroup.getUser());
+		groupRepository.save(userGroup.getGroup());
 		return true;
 	}
 	
@@ -51,12 +48,8 @@ public class GroupServiceImpl implements GroupService {
 		return null;
 	}
 
-	// 테스트
 	@Override
-	public UserGroup test(UserGroup userGroup) {
-		userGroup.getGroup().addUsers(userGroup.getUser());
-		userGroup.getUser().addGroups(userGroup.getGroup());
-		groupRepository.save(userGroup.getGroup());
-		return userGroup;
+	public List<Group> test() {
+		return groupRepository.findAll();
 	}
 }
