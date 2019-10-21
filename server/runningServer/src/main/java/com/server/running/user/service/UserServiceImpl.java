@@ -1,10 +1,10 @@
 package com.server.running.user.service;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.server.running.user.dto.User;
 import com.server.running.user.repository.UserRepository;
 import com.server.running.util.SecurityUtil;
@@ -58,9 +58,9 @@ public class UserServiceImpl implements UserService {
 		return true;
 	}
 
-	// 테스트
+	// 러닝 데이터 조회
 	@Override
-	public List<User> test() {
-		return userRepository.findAll();
+	public User findRunning(User user) {
+		return userRepository.findById(user.getUid()).get();
 	}
 }
