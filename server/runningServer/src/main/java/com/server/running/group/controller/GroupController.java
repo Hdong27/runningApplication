@@ -1,12 +1,19 @@
 package com.server.running.group.controller;
 
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.server.running.group.dto.Group;
 import com.server.running.group.dto.UserGroup;
 import com.server.running.group.service.GroupService;
 
@@ -20,17 +27,43 @@ public class GroupController {
 	
 	// 그룹 생성
 	@PostMapping("/createTeam.run")
-	public ResponseEntity<UserGroup> createTeam(@RequestBody UserGroup userGroup) {
+	public ResponseEntity<Boolean> createTeam(@RequestBody UserGroup userGroup) {
 		log.debug("그룹 생성 요청");
-		return new ResponseEntity<UserGroup>(groupService.test(userGroup), HttpStatus.OK);
+		return new ResponseEntity<Boolean>(groupService.createTeam(userGroup), HttpStatus.OK);
 	}
 	
 	// 그룹 수정
+	@PostMapping("/updateTeam.run")
+	public ResponseEntity<Boolean> updateTeam(@RequestBody Group group) {
+		log.debug("그룹 수정 요청");
+		return new ResponseEntity<Boolean>(groupService.updateTeam(group), HttpStatus.OK);
+	}
 	
 	// 그룹 삭제
+	@DeleteMapping("/deleteTeam.run")
+	public ResponseEntity<Boolean> deleteTeam(@RequestBody Group group) {
+		log.debug("그룹 삭제 요청");
+		return new ResponseEntity<Boolean>(groupService.deleteTeam(group), HttpStatus.OK);
+	}
 	
 	// 그룹에 참가
+	@PostMapping("/joinTeam.run")
+	public ResponseEntity<Boolean> joinTeam(@RequestBody UserGroup userGroup) {
+		log.debug("그룹 참가 요청");
+		return new ResponseEntity<Boolean>(groupService.joinTeam(userGroup), HttpStatus.OK);
+	}
 	
 	// 그룹 탈퇴
+	@PostMapping("/outTeam.run")
+	public ResponseEntity<Boolean> outTeam(@RequestBody UserGroup userGroup) {
+		log.debug("그룹 탈퇴 요청");
+		return new ResponseEntity<Boolean>(groupService.outTeam(userGroup), HttpStatus.OK);
+	}
 	
+	// 전체 그룹 정보 조회
+	@GetMapping("/findAllTeam.run")
+	public ResponseEntity<List<Group>> findAllTeam(HttpServletRequest request) {
+		log.debug("전체 그룹 정보 요청");
+		return new ResponseEntity<List<Group>>(groupService.findAllTeam(), HttpStatus.OK);
+	}
 }

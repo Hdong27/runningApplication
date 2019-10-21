@@ -11,6 +11,7 @@
 	<groupId>com.example</groupId>
 	<artifactId>runningServer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>runningServer</name>
 	<description>Running server for Spring Boot</description>
 

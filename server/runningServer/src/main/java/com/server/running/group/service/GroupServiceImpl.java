@@ -1,7 +1,7 @@
 package com.server.running.group.service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.server.running.group.dto.Group;
 import com.server.running.group.dto.UserGroup;
 import com.server.running.group.repository.GroupRepository;
-import com.server.running.user.dto.User;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -18,10 +17,9 @@ public class GroupServiceImpl implements GroupService {
 	
 	// 그룹 생성
 	@Override
-	public Boolean createTeam(Group group, User user) {
-		groupRepository.save(group);
-		group.addUsers(user);
-		user.addGroups(group);
+	public Boolean createTeam(UserGroup userGroup) {
+		userGroup.getGroup().addUsers(userGroup.getUser());
+		groupRepository.save(userGroup.getGroup());
 		return true;
 	}
 	
@@ -41,22 +39,28 @@ public class GroupServiceImpl implements GroupService {
 	
 	// 그룹에 참가
 	@Override
-	public Boolean joinTeam(Group group) {
-		return null;
+	public Boolean joinTeam(UserGroup userGroup) {
+		Optional<Group> maybeGroup = groupRepository.findById(userGroup.getGroup().getGid());
+		maybeGroup.get().addUsers(userGroup.getUser());
+		groupRepository.save(maybeGroup.get());
+		return true;
 	}
 	
 	// 그룹 탈퇴
 	@Override
-	public Boolean outTeam(Group group) {
-		return null;
+	public Boolean outTeam(UserGroup userGroup) {
+		Optional<Group> maybeGroup = groupRepository.findById(userGroup.getGroup().getGid());
+		int size = maybeGroup.get().deleteUsers(userGroup.getUser());
+		if(size > 0) {
+			groupRepository.save(maybeGroup.get());
+		} else {
+			groupRepository.delete(maybeGroup.get());
+		}
+		return true;
 	}
 
-	// 테스트
 	@Override
-	public UserGroup test(UserGroup userGroup) {
-		userGroup.getGroup().addUsers(userGroup.getUser());
-		userGroup.getUser().addGroups(userGroup.getGroup());
-		groupRepository.save(userGroup.getGroup());
-		return userGroup;
+	public List<Group> findAllTeam() {
+		return groupRepository.findAll();
 	}
 }
