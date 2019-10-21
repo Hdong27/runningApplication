@@ -1,5 +1,7 @@
 package com.server.running.user.service;
 
+import java.util.List;
+
 import com.server.running.user.dto.User;
 
 public interface UserService {
@@ -14,5 +16,8 @@ public interface UserService {
 	
 	// 회원 탈퇴
 	public boolean deleteUser(User user);
+	
+	// 테스트
+	public List<User> test();
 	
 }

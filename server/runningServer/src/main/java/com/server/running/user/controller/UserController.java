@@ -1,5 +1,7 @@
 package com.server.running.user.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,17 @@ public class UserController {
 		return new ResponseEntity<String>("수신 완료", HttpStatus.OK);
 	}
 	
+	// 테스트
+	@GetMapping("/test2.run")
+	public ResponseEntity<List<User>> test(HttpServletRequest request) {
+		return new ResponseEntity<List<User>>(userService.test(), HttpStatus.OK);
+	}
+	
 	// 회원가입
 	@PostMapping("/signup.run")
 	public ResponseEntity<Boolean> signup(@RequestBody User user){
 		log.debug("회원가입 요청");
+		log.debug(user.getEmail() + " : " + user.getPassword());
 		return new ResponseEntity<Boolean>(userService.signup(user), HttpStatus.OK);
 	}
 	

@@ -1,5 +1,6 @@
 package com.server.running.user.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +57,10 @@ public class UserServiceImpl implements UserService {
 		userRepository.delete(user);
 		return true;
 	}
-	
-	
-	
+
+	// 테스트
+	@Override
+	public List<User> test() {
+		return userRepository.findAll();
+	}
 }
