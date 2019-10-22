@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.server.running.user.dto.User;
@@ -26,14 +27,14 @@ public class UserController {
 	@GetMapping("/test")
 	public ResponseEntity<String> androidTest(HttpServletRequest request) {
 		System.out.println("android Test");
-		return new ResponseEntity<String>("수신 완료", HttpStatus.OK);
+		String result = new String("수신완료");
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
 	// 회원가입
 	@PostMapping("/signup.run")
 	public ResponseEntity<Boolean> signup(@RequestBody User user){
 		log.debug("회원가입 요청");
-		log.debug(user.getEmail() + " : " + user.getPassword());
 		return new ResponseEntity<Boolean>(userService.signup(user), HttpStatus.OK);
 	}
 	
@@ -46,7 +47,7 @@ public class UserController {
 	}
 	
 	// 회원 정보 수정
-	@PostMapping("/updateUser.run")
+	@PutMapping("/updateUser.run")
 	public ResponseEntity<User> updateUser(@RequestBody User user){
 		log.debug("회원정보 수정 요청");
 		return new ResponseEntity<User>(userService.updateUser(user), HttpStatus.OK);
@@ -64,5 +65,12 @@ public class UserController {
 	public ResponseEntity<User> findRunning(@RequestBody User user) {
 		log.debug("전체 러닝 데이터 조회 요청" + user.toString());
 		return new ResponseEntity<User>(userService.findRunning(user), HttpStatus.OK);
+	}
+	
+	// 아이디 중복 체크
+	@PostMapping("/overlap.run")
+	public ResponseEntity<Boolean> overlap(@RequestBody User user) {
+		log.debug("아이디 중복체크 요청");
+		return new ResponseEntity<Boolean>(userService.overlap(user), HttpStatus.OK);
 	}
 }

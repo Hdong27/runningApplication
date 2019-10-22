@@ -39,7 +39,9 @@ public class UserServiceImpl implements UserService {
 			return maybeUser.get();
 		} else {
 			// 아이디가 없음
-			return new User();
+			user = new User();
+			user.setUid(0);
+			return user;
 		}
 	}
 	
@@ -62,5 +64,16 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findRunning(User user) {
 		return userRepository.findById(user.getUid()).get();
+	}
+
+	// 아이디 중복체크 요청
+	@Override
+	public boolean overlap(User user) {
+		Optional<User> maybeUser = userRepository.findByEmail(user.getEmail());
+		if(maybeUser.isPresent()) {
+			return false;
+		} else {
+			return true;
+		}
 	}
 }
