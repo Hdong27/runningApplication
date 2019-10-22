@@ -26,14 +26,14 @@ public class UserController {
 	@GetMapping("/test")
 	public ResponseEntity<String> androidTest(HttpServletRequest request) {
 		System.out.println("android Test");
-		return new ResponseEntity<String>("수신 완료", HttpStatus.OK);
+		String result = new String("수신완료");
+		return new ResponseEntity<String>(result, HttpStatus.OK);
 	}
 	
 	// 회원가입
 	@PostMapping("/signup.run")
 	public ResponseEntity<Boolean> signup(@RequestBody User user){
 		log.debug("회원가입 요청");
-		log.debug(user.getEmail() + " : " + user.getPassword());
 		return new ResponseEntity<Boolean>(userService.signup(user), HttpStatus.OK);
 	}
 	
