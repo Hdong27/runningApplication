@@ -21,4 +21,7 @@ public interface UserService {
 	// 러닝 데이터 조회
 	public User findRunning(User user);
 	
+	// 아이디 중복 체크 요청
+	public boolean overlap(User user);
+	
 }

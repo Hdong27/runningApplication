@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.server.running.group.dto.Group;
@@ -33,7 +34,7 @@ public class GroupController {
 	}
 	
 	// 그룹 수정
-	@PostMapping("/updateTeam.run")
+	@PutMapping("/updateTeam.run")
 	public ResponseEntity<Boolean> updateTeam(@RequestBody Group group) {
 		log.debug("그룹 수정 요청");
 		return new ResponseEntity<Boolean>(groupService.updateTeam(group), HttpStatus.OK);
