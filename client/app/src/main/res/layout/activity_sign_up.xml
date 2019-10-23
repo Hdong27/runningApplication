@@ -1,72 +1,104 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".SignUpActivity">
 
-    <EditText
-        android:id="@+id/email"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="email"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toTopOf="@+id/pwd"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@id/emailChk"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-    <EditText
-        android:id="@+id/pwd"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="password"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/pwdChk"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/email"
-        app:layout_constraintVertical_weight="1" />
 
-    <EditText
-        android:id="@+id/pwdChk"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="password check"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/btn_submit"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pwd"
-        app:layout_constraintVertical_weight="1" />
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:scaleType="center"
+            android:src="@drawable/left"
+            android:textAlignment="textStart"
+           />
+
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:src="@drawable/logo"
+            android:textAlignment="textStart"
+      />
+    </FrameLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/input"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:gravity="center_vertical|center_horizontal"
+                android:layout_margin="10dp"
+                >
+
+                <EditText
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ems="9"
+                    android:hint="이메일 주소"
+                    android:layout_gravity="center"
+                    android:inputType="textEmailAddress"
+                    android:layout_span="3"
+                     />
+                <Button
+                    android:id="@+id/emailChk"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="중복 확인"
+                    android:layout_margin="-5dp"
+
+                    />
+
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:layout_margin="10dp"
+                android:hint="비밀번호"
+                android:layout_gravity="center"
+                android:inputType="textPassword"
+                 />
+            <EditText
+                android:id="@+id/pwdChk"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="13"
+                android:layout_margin="10dp"
+                android:hint="비밀번호 확인"
+                android:layout_gravity="center"
+                android:inputType="textPassword"
+                 />
 
     <Button
         android:id="@+id/btn_submit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="submit"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/pwdChk"
-        app:layout_constraintVertical_weight="2" />
-
-    <Button
-        android:id="@+id/emailChk"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="중복 확인"
-        app:layout_constraintBottom_toTopOf="@id/pwd"
-        app:layout_constraintHorizontal_weight="1"
-        app:layout_constraintLeft_toRightOf="@id/email"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_weight="1" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:background="@drawable/signup_btn"
+        android:layout_margin="10dp"
+        android:text="계정 만들기"
+        android:textColor="#FFFFFF"
+        android:layout_gravity="center" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>

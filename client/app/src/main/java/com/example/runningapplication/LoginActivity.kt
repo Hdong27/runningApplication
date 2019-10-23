@@ -1,6 +1,7 @@
 package com.example.runningapplication
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -58,5 +59,10 @@ class LoginActivity : AppCompatActivity() {
                 }
             })
         }
+        back.setOnClickListener {
+            val landingIntent = Intent(this, LandingActivity::class.java)
+            startActivity(landingIntent)
+        }
+
     }
 }
