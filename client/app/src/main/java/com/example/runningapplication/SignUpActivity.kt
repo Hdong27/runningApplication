@@ -1,5 +1,6 @@
 package com.example.runningapplication
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -64,6 +65,11 @@ class SignUpActivity : AppCompatActivity() {
                 }
 
             })
+        }
+
+        back.setOnClickListener {
+            val landingIntent = Intent(this, LandingActivity::class.java)
+            startActivity(landingIntent)
         }
 
     }

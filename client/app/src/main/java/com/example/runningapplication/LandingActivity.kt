@@ -15,27 +15,24 @@ class LandingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
 
-
-        Log.d("here?",settings.getString("email","no"))
-        Log.d("here??",settings.getBoolean("AutoLogin",false).toString())
         if(settings.getBoolean("AutoLogin",false)){
-            Log.d("here???","ㅗ")
             val rIntent = Intent(this, MainActivity::class.java)
             startActivity(rIntent)
+            finish()
         }else{
             setContentView(R.layout.activity_landing)
+            btn_signup.setOnClickListener {
+                val signUpIntent = Intent(this, SignUpActivity::class.java)
+                startActivity(signUpIntent)
+            }
+
+            btn_login.setOnClickListener{
+                val loginIntent = Intent(this, LoginActivity::class.java)
+                startActivity(loginIntent)
+            }
         }
 
-        btn_signup.setOnClickListener {
-            Toast.makeText(this, "회원가입", Toast.LENGTH_SHORT).show()
-            val signUpIntent = Intent(this, SignUpActivity::class.java)
-            startActivity(signUpIntent)
-        }
 
-        btn_login.setOnClickListener{
-            val loginIntent = Intent(this, LoginActivity::class.java)
-            startActivity(loginIntent)
-        }
     }
 
 }
