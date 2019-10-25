@@ -3,10 +3,13 @@ package com.example.runningapplication
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.os.SystemClock
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.fragment_main.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -22,24 +25,52 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class MainFragment : Fragment() {
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("Oncreate", "Oncreate")
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        var stoptime:Long=0
+
+        start_btn?.setOnClickListener {
+            chronometer2.base=SystemClock.elapsedRealtime()+stoptime
+            chronometer2.start()
+            start_btn.visibility=View.GONE
+            pause_btn.visibility=View.VISIBLE
+        }
+        pause_btn?.setOnClickListener {
+            stoptime = chronometer2.base-SystemClock.elapsedRealtime()
+            chronometer2.stop()
+            pause_btn.visibility=View.GONE
+            start_btn.visibility=View.VISIBLE
+
+        }
+        reset_btn?.setOnClickListener {
+            chronometer2.base=SystemClock.elapsedRealtime()
+            stoptime=0
+            chronometer2.stop()
+            start_btn.visibility=View.VISIBLE
+            pause_btn.visibility=View.GONE
+        }
+    }
     override fun onCreateView(
+
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        Log.d("Oncreateview", "Oncreateview")
+
         return inflater.inflate(R.layout.fragment_main, container, false)
     }
 
@@ -50,7 +81,9 @@ class MainFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        Log.d("onAttach", "onAttach")
         if (context is OnFragmentInteractionListener) {
+
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
@@ -59,6 +92,7 @@ class MainFragment : Fragment() {
 
     override fun onDetach() {
         super.onDetach()
+        Log.d("onDetach", "onDetach")
         listener = null
     }
 

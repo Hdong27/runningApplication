@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(),
     override fun onNavigationItemSelected(p0: MenuItem) : Boolean {
         when(p0.itemId){
             R.id.navigation_home -> {
+
                 fm.beginTransaction().replace(R.id.fragment,MainFragment()).commit()
             }
             R.id.navigation_activity -> {
