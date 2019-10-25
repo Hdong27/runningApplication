@@ -16,6 +16,6 @@
     <string name="title_club">클럽</string>
     <string name="title_activity">활동</string>
 
-
-
+    <!-- google map API_KEY -->
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDEgFT9kIYQK84w0rDJHgP93ESBqiHiEj4</string>
 </resources>
