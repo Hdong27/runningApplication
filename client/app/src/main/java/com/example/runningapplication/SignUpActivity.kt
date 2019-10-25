@@ -20,7 +20,7 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         var retrofit = Retrofit.Builder()
-            .baseUrl(R.string.ip as String)
+            .baseUrl("http://52.79.200.149:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

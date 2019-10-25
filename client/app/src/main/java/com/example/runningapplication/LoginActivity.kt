@@ -26,9 +26,10 @@ class LoginActivity : AppCompatActivity() {
         var editor: SharedPreferences.Editor = settings.edit()
 
         var retrofit = Retrofit.Builder()
-            .baseUrl(R.string.ip as String)
+            .baseUrl("http://52.79.200.149:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
+
 
         var server = retrofit.create(UserService::class.java)
 
@@ -40,13 +41,19 @@ class LoginActivity : AppCompatActivity() {
             server.login(parameters).enqueue(object : Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==200){
-                        loginChk.text="로그인 되었습니다."
-                        var user:User? = response.body()
-                        Log.d("user",user?.email.toString())
-                        Log.d("user",user?.password.toString())
-                        editor.putBoolean("AutoLogin",true)
-                        editor.putString("email",user?.email.toString())
-                        editor.commit()
+                        if(response.body()?.uid.equals("0")) {
+                            loginChk.text="로그인 실패요."
+                        } else {
+                            loginChk.text="로그인 되었습니다."
+                            var user:User? = response.body()
+                            Log.d("user",user?.email.toString())
+                            Log.d("user",user?.password.toString())
+                            editor.putBoolean("AutoLogin",true)
+                            editor.putString("email",user?.email.toString())
+                            editor.commit()
+
+                        }
+
                     }else{
                         loginChk.text="로그인 실패. 다시 ㄱ"
                     }
