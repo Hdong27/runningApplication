@@ -63,7 +63,7 @@ public class UserController {
 	// 러닝 데이터 조회
 	@GetMapping("/findRunning.run")
 	public ResponseEntity<User> findRunning(@RequestBody User user) {
-		log.debug("전체 러닝 데이터 조회 요청" + user.toString());
+		log.debug("전체 러닝 데이터 조회 요청");
 		return new ResponseEntity<User>(userService.findRunning(user), HttpStatus.OK);
 	}
 	
