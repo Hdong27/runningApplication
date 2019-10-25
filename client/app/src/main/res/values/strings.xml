@@ -18,5 +18,6 @@
 
     <!-- google map API_KEY -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDEgFT9kIYQK84w0rDJHgP93ESBqiHiEj4</string>
+    <string name="ip">http://52.79.200.149:8080</string>
 
 </resources>
