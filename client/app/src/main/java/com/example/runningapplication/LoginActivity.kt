@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         var editor: SharedPreferences.Editor = settings.edit()
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://70.12.247.54:8080")
+            .baseUrl(R.string.ip as String)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
