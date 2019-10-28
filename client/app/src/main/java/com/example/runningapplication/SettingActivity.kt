@@ -1,33 +1,47 @@
 package com.example.runningapplication
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_club.*
-import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_setting.*
 
-class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItemSelectedListener{
+class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigationItemSelectedListener{
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-        mainMenu.setOnNavigationItemSelectedListener(this)
-        mainMenu.selectedItemId = R.id.main
+        setContentView(R.layout.activity_setting)
+
+        var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
+        var editor: SharedPreferences.Editor = settings.edit()
+
+        settingMenu.setOnNavigationItemSelectedListener(this)
+        settingMenu.selectedItemId = R.id.setting
+
+        btn_logout.setOnClickListener{
+            editor.remove("AutoLogin")
+            editor.remove("email")
+            editor.commit()
+
+            val landingIntent = Intent(this,LandingActivity::class.java)
+            startActivity(landingIntent)
+        }
     }
     override fun onNavigationItemSelected(p0: MenuItem) : Boolean {
         when(p0.itemId){
             R.id.feed -> {
-                Log.d("즐","김현빈바보")
                 val feedIntent = Intent(this, FeedActivity::class.java)
                 startActivity(feedIntent)
             }
             R.id.main-> {
+                val activityIntent = Intent(this, MainActivity::class.java)
+                startActivity(activityIntent)
             }
             R.id.running-> {
-                Log.d("즐","running")
                 val runningIntent = Intent(this, RunningActivity::class.java)
                 startActivity(runningIntent)
             }
@@ -36,8 +50,6 @@ class MainActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
                 startActivity(clubIntent)
             }
             R.id.setting-> {
-                val settingIntent = Intent(this, SettingActivity::class.java)
-                startActivity(settingIntent)
             }
 
         }
