@@ -41,30 +41,28 @@ class LoginActivity : AppCompatActivity() {
             server.login(parameters).enqueue(object : Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==200){
+                        Toast.makeText(applicationContext, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                         if(response.body()?.uid.equals("0")) {
-                            loginChk.text="로그인 실패요."
                         } else {
-                            loginChk.text="로그인 되었습니다."
                             var user:User? = response.body()
                             Log.d("user",user?.email.toString())
                             Log.d("user",user?.password.toString())
                             editor.putBoolean("AutoLogin",true)
                             editor.putString("email",user?.email.toString())
                             editor.commit()
-
-
-
+                            Toast.makeText(applicationContext, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                             startActivity(loginIntent)
+
+                            Intent.FLAG_ACTIVITY_CLEAR_TOP
+                            finish()
                         }
 
                     }else{
-                        loginChk.text="로그인 실패. 다시 ㄱ"
                     }
                 }
 
                 override fun onFailure(call: Call<User>, t: Throwable) {
                     Log.d("hi","hi")
-                    loginChk.text=t.toString()
                     Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
                 }
             })
