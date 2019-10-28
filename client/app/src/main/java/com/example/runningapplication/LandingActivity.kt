@@ -16,7 +16,7 @@ class LandingActivity : AppCompatActivity() {
         var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
 
         if(settings.getBoolean("AutoLogin",false)){
-            val rIntent = Intent(this, MainActivity::class.java)
+            val rIntent = Intent(this, RunningActivity::class.java)
             startActivity(rIntent)
             finish()
         }else{

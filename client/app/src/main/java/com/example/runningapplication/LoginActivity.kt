@@ -29,7 +29,7 @@ class LoginActivity : AppCompatActivity() {
             .baseUrl("http://52.79.200.149:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-
+        val loginIntent = Intent(this, RunningActivity::class.java)
 
         var server = retrofit.create(UserService::class.java)
 
@@ -52,6 +52,9 @@ class LoginActivity : AppCompatActivity() {
                             editor.putString("email",user?.email.toString())
                             editor.commit()
 
+
+
+                            startActivity(loginIntent)
                         }
 
                     }else{

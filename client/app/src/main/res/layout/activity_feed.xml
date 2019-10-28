@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0000FF"
     android:orientation="vertical"
-    tools:context=".MainActivity">
-
+    tools:context=".FeedActivity">
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:src="@drawable/logo" />
+        android:src = "@drawable/logo"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,14 +17,12 @@
         android:layout_weight="7"
         android:orientation="vertical">
 
-
     </LinearLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/mainMenu"
+        android:id="@+id/feedMenu"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         app:menu="@menu/bottom_nav_menu" />
-
 </LinearLayout>

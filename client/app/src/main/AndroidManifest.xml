@@ -4,9 +4,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-
-    <!-- Google Map -->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Google Map -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
@@ -17,7 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity" />
+        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".SettingActivity" />
+        <activity android:name=".FeedActivity" />
+        <activity android:name=".ClubActivity" />
+        <activity android:name=".RunningActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LandingActivity">
@@ -26,13 +28,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- Google API_KEY -->
+        </activity> <!-- Google API_KEY -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
-
+            android:value="@string/google_maps_key" />
     </application>
 
 </manifest>
