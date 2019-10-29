@@ -28,7 +28,6 @@ class RunningActivity : AppCompatActivity() ,
                 startActivity(feedIntent)
             }
             R.id.main-> {
-                Log.d("즐","main")
                 val activityIntent = Intent(this, MainActivity::class.java)
                 startActivity(activityIntent)
             }

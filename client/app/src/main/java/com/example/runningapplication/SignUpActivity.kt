@@ -33,15 +33,15 @@ class SignUpActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
 
                     if(response.body()==true){
-                        Toast.makeText(applicationContext, "사용해도 좋습니당.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "사용 가능한 이메일입니다.", Toast.LENGTH_SHORT).show()
                     }else{
-                        Toast.makeText(applicationContext, "중복댐", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "중복되는 이메일입니다.", Toast.LENGTH_SHORT).show()
                     }
 
                 }
 
                 override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                    Toast.makeText(applicationContext, "메일 중복", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "중복되는 이메일입니다.", Toast.LENGTH_SHORT).show()
                 }
 
             })
@@ -61,7 +61,7 @@ class SignUpActivity : AppCompatActivity() {
 
                 override fun onFailure(call: Call<Boolean>, t: Throwable) {
                     Log.d("hi","hi")
-                    Toast.makeText(applicationContext, "가입 실패", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, "가입에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                 }
 
             })
