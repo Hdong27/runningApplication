@@ -23,18 +23,22 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
             }
             R.id.main-> {
                 val activityIntent = Intent(this, MainActivity::class.java)
+                activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(activityIntent)
             }
             R.id.running-> {
                 val runningIntent = Intent(this, RunningActivity::class.java)
+                runningIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(runningIntent)
             }
             R.id.club-> {
                 val clubIntent = Intent(this, ClubActivity::class.java)
+                clubIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(clubIntent)
             }
             R.id.setting-> {
                 val settingIntent = Intent(this, SettingActivity::class.java)
+                settingIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(settingIntent)
             }
 

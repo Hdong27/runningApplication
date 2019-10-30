@@ -79,20 +79,24 @@ class MainActivity : AppCompatActivity(),
         when(p0.itemId){
             R.id.feed -> {
                 val feedIntent = Intent(this, FeedActivity::class.java)
+                feedIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(feedIntent)
             }
             R.id.main-> {
             }
             R.id.running-> {
                 val runningIntent = Intent(this, RunningActivity::class.java)
+                runningIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(runningIntent)
             }
             R.id.club-> {
                 val clubIntent = Intent(this, ClubActivity::class.java)
+                clubIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(clubIntent)
             }
             R.id.setting-> {
                 val settingIntent = Intent(this, SettingActivity::class.java)
+                settingIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(settingIntent)
             }
 
