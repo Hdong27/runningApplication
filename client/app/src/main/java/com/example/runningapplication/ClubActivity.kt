@@ -19,24 +19,25 @@ class ClubActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
     override fun onNavigationItemSelected(p0: MenuItem) : Boolean {
         when(p0.itemId){
             R.id.feed -> {
-                Log.d("즐","김현빈바보")
                 val feedIntent = Intent(this, FeedActivity::class.java)
+                feedIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(feedIntent)
             }
             R.id.main-> {
-                Log.d("즐","main")
                 val activityIntent = Intent(this, MainActivity::class.java)
+                activityIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(activityIntent)
             }
             R.id.running-> {
-                Log.d("즐","running")
                 val runningIntent = Intent(this, RunningActivity::class.java)
+                runningIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(runningIntent)
             }
             R.id.club-> {
             }
             R.id.setting-> {
                 val settingIntent = Intent(this, SettingActivity::class.java)
+                settingIntent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
                 startActivity(settingIntent)
             }
 

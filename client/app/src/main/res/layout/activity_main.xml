@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#0000FF"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
@@ -13,14 +12,49 @@
         android:layout_height="50dp"
         android:src="@drawable/logo" />
 
-    <LinearLayout
+
+
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="7"-->
+<!--        android:orientation="vertical">-->
+
+
+<!--    </LinearLayout>-->
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mainTabs"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="#000000"
+        app:tabIndicatorGravity="bottom">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/record"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_record" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/achieve"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="달성기록" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="러닝 레벨" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/mainViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="7"
-        android:orientation="vertical">
-
-
-    </LinearLayout>
+        android:layout_weight="7" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/mainMenu"
