@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.ImageView
+import kotlinx.android.synthetic.main.fragment_main_achieve.*
+import kotlinx.android.synthetic.main.fragment_main_achieve.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +37,8 @@ class MainAchieveFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+
+
     }
 
     override fun onCreateView(
@@ -40,7 +46,19 @@ class MainAchieveFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_achieve, container, false)
+        var myView :View = inflater.inflate(R.layout.fragment_main_achieve, container, false)
+        var list : ArrayList<String> = ArrayList()
+
+        if(!list.contains("ok"))myView.ach_ok.alpha=0.5f
+        if(!list.contains("fk"))myView.ach_fk.alpha=0.5f
+        if(!list.contains("hm"))myView.ach_hm.alpha=0.5f
+        if(!list.contains("long"))myView.ach_long.alpha=0.5f
+        if(!list.contains("ma"))myView.ach_ma.alpha=0.5f
+        if(!list.contains("mile"))myView.ach_mile.alpha=0.5f
+        if(!list.contains("time"))myView.ach_time.alpha=0.5f
+        if(!list.contains("tk"))myView.ach_tk.alpha=0.5f
+
+        return myView
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -50,6 +68,7 @@ class MainAchieveFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
