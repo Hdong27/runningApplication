@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="13"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 android:hint="이름"
                 android:layout_gravity="center"
                 android:inputType="text"
@@ -57,7 +57,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:gravity="center_vertical|center_horizontal"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 >
 
                 <EditText
@@ -86,7 +86,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ems="13"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 android:hint="비밀번호"
                 android:layout_gravity="center"
                 android:inputType="textPassword"
@@ -95,7 +95,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 android:gravity="center">
                 <EditText
                     android:id="@+id/pwdChk"
@@ -104,7 +104,6 @@
                     android:ems="13"
 
                     android:hint="비밀번호 확인"
-                    android:layout_gravity="center"
                     android:inputType="textPassword"
                     />
 
@@ -120,7 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_margin="5dp"
+                android:layout_margin="3dp"
                 android:gravity="center"
                 android:orientation="horizontal">
 
