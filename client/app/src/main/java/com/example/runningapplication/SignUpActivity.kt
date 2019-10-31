@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.RadioButton
 import android.widget.Toast
 import com.example.runningapplication.service.UserService
 import kotlinx.android.synthetic.main.activity_sign_up.*
@@ -50,8 +51,12 @@ class SignUpActivity : AppCompatActivity() {
         btn_submit.setOnClickListener {
             Log.d("Here?","Here?")
             var parameters = HashMap<String,Any>()
+            parameters.put("name", this.username.text.toString())
+            parameters.put("height",this.height.text.toString())
+            parameters.put("weight", this.weight.text.toString())
             parameters.put("email",this.email.text.toString())
             parameters.put("password",this.pwd.text.toString())
+            parameters.put("gender",findViewById<RadioButton>(this.gender.checkedRadioButtonId).text.toString())
             Log.d("",parameters.toString())
             server.signUp(parameters).enqueue(object : Callback<Boolean>{
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
