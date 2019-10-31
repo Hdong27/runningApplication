@@ -3,7 +3,11 @@ package com.example.runningapplication
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
+import android.widget.EditText
+import android.widget.ImageView
 import android.widget.RadioButton
 import android.widget.Toast
 import com.example.runningapplication.service.UserService
@@ -27,6 +31,25 @@ class SignUpActivity : AppCompatActivity() {
 
         var server = retrofit.create(UserService::class.java)
 
+        pwdChk.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if(pwd.text.toString().equals(pwdChk.text.toString())){
+                    setImage.setImageResource(R.drawable.correct)
+                } else{
+                    setImage.setImageResource(R.drawable.cancel)
+                }
+            }
+        })
+
+
+
+
         emailChk.setOnClickListener{
             var parameters = HashMap<String,Any>()
             parameters.put("email",this.email.text.toString())
@@ -47,6 +70,8 @@ class SignUpActivity : AppCompatActivity() {
 
             })
         }
+
+
 
         btn_submit.setOnClickListener {
             Log.d("Here?","Here?")
