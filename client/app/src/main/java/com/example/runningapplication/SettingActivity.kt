@@ -33,9 +33,14 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         settingMenu.setOnNavigationItemSelectedListener(this)
         settingMenu.selectedItemId = R.id.setting
 
-
+        val displayRectangle = Rect()
+        window.decorView.getWindowVisibleDisplayFrame(displayRectangle)
+        var size=(displayRectangle.width()*0.3f).toInt()
+        ProfileImage.layoutParams.height=size
+        ProfileImage.layoutParams.width=size
         ProfileImage.background = ShapeDrawable(OvalShape())
         ProfileImage.clipToOutline = true
+        ProfileImage.requestLayout()
 
         ProfileGender.setOnClickListener {
             var d=Dialog(this)

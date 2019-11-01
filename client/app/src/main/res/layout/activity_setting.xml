@@ -16,47 +16,50 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="7"
         android:orientation="vertical"
         >
-
-        <ImageView
-            android:id="@+id/ProfileImage"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_gravity="center"
-            android:layout_marginTop="30dp"
-            android:layout_weight="1"
-            android:adjustViewBounds="true"
-            android:scaleType="fitCenter"
-            android:src="@drawable/run" />
+            android:layout_weight="3">
 
-        <TextView
-            android:id="@+id/name"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
-            android:layout_marginBottom="7dp"
-            android:gravity="center"
-            android:text="옹붐바바"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+            <ImageView
+                android:id="@+id/ProfileImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/dprofile" />
 
-        <TextView
-            android:id="@+id/email"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="30dp"
-            android:gravity="center"
-            android:text="duadaduda"
-            android:textColor="#E4646060"
-            android:textSize="15sp" />
 
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:text="옹붐바바"
+                android:layout_weight="2"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:text="duadaduda"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="#E4646060"
+                android:textSize="15sp" />
+        </LinearLayout>
         <View
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#f3f3f3" />
-
+        <!-- 성별 -->
         <LinearLayout
             android:id="@+id/ProfileGender"
             android:layout_width="match_parent"
@@ -91,7 +94,7 @@
             android:layout_width="match_parent"
             android:layout_height="2dp"
             android:background="#f3f3f3" />
-
+        <!--   신장     -->
         <LinearLayout
             android:id="@+id/ProfileHeight"
             android:layout_width="match_parent"
@@ -127,7 +130,7 @@
             android:layout_height="2dp"
             android:background="#f3f3f3" />
 
-
+        <!--   체중     -->
         <LinearLayout
             android:id="@+id/ProfileWeight"
             android:layout_width="match_parent"
@@ -166,6 +169,7 @@
 
 
     </LinearLayout>
+    <!--    빈공간 차지하는 것 -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_weight="1"
@@ -179,6 +183,7 @@
         android:layout_height="0.5dp"
         android:background="#C2C2C2" />
 
+    <!--  로그아웃  -->
     <Button
         android:id="@+id/btn_logout"
         style="@style/Widget.AppCompat.Button.Borderless"
@@ -194,6 +199,7 @@
         android:layout_height="0.5dp"
         android:background="#C2C2C2" />
 
+    <!-- 내비게이션 바 -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/settingMenu"
         android:layout_width="match_parent"
