@@ -142,7 +142,10 @@ class RunningActivity : AppCompatActivity() ,
 
             flag = 2
             Toast.makeText(this.applicationContext, "시작", Toast.LENGTH_SHORT).show()
-
+            pause_btn.setBackgroundResource(R.color.Yellow)
+            reset_btn.setBackgroundColor(resources.getColor(R.color.Red))
+            pause_btn.setTextColor(resources.getColor(R.color.White))
+            reset_btn.setTextColor(resources.getColor(R.color.White))
             start_btn.visibility = View.GONE
             pause_btn.visibility = View.VISIBLE
         }
@@ -153,6 +156,10 @@ class RunningActivity : AppCompatActivity() ,
             Toast.makeText(this.applicationContext, "재시작", Toast.LENGTH_SHORT).show()
 
             restart_btn.visibility = View.GONE
+            pause_btn.setBackgroundResource(R.color.Yellow)
+            reset_btn.setBackgroundColor(resources.getColor(R.color.Red))
+            pause_btn.setTextColor(resources.getColor(R.color.White))
+            reset_btn.setTextColor(resources.getColor(R.color.White))
             pause_btn.visibility = View.VISIBLE
         }
 
@@ -162,7 +169,10 @@ class RunningActivity : AppCompatActivity() ,
 
             flag = 3
             Toast.makeText(this.applicationContext, "일시정지", Toast.LENGTH_SHORT).show()
-
+            reset_btn.setBackgroundResource(R.color.Red)
+            reset_btn.setTextColor(resources.getColor(R.color.White))
+            restart_btn.setBackgroundResource(R.color.Blue)
+            restart_btn.setTextColor(resources.getColor(R.color.White))
             pause_btn.visibility = View.GONE
             restart_btn.visibility = View.VISIBLE
         }
@@ -185,7 +195,8 @@ class RunningActivity : AppCompatActivity() ,
 
             start_btn.visibility = View.VISIBLE
             pause_btn.visibility = View.GONE
-
+            reset_btn.setBackgroundResource(R.color.White)
+            reset_btn.setTextColor(resources.getColor(R.color.Black))
 
         }
         // 버튼 스톱워치

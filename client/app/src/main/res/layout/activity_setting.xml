@@ -39,9 +39,9 @@
                 android:id="@+id/name"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:gravity="center"
+                android:gravity="bottom|center_horizontal"
                 android:text="옹붐바바"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:textSize="24sp"
                 android:textStyle="bold" />
 
@@ -51,7 +51,7 @@
                 android:layout_height="0dp"
                 android:text="duadaduda"
                 android:layout_weight="1"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:textColor="#E4646060"
                 android:textSize="15sp" />
         </LinearLayout>
