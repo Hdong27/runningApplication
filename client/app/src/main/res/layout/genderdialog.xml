@@ -31,6 +31,7 @@
             android:layout_gravity="center"
             android:layout_margin="30dp"
             android:text="남성"
+            android:buttonTint="#235C1F"
             android:textSize="24sp" />
 
         <RadioButton
@@ -40,6 +41,7 @@
             android:layout_gravity="center"
             android:layout_margin="30dp"
             android:text="여성"
+            android:buttonTint="#235C1F"
             android:textSize="24sp" />
     </RadioGroup>
 

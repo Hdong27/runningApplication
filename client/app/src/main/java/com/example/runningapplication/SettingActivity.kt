@@ -46,6 +46,7 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         weightVal.text=settings.getInt("weight",70).toString()
         ProfileImage.background = ShapeDrawable(OvalShape())
         ProfileImage.clipToOutline = true
+        ProfileImage.requestLayout()
 
         ProfileGender.setOnClickListener {
             var d=Dialog(this)
