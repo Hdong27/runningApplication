@@ -1,12 +1,14 @@
 package com.example.runningapplication
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.fragment_club_challenge.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +42,34 @@ class ClubChallengeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_club_challenge, container, false)
+        val view: View =  inflater.inflate(R.layout.fragment_club_challenge, container, false)
+
+        view.challenge_main_img.setOnClickListener {
+            val intent = Intent(activity, ClubChallengeMonthly50Activity::class.java)
+            startActivity(intent)
+//            view -> Log.d("challenge_main_img","Selected")
+        }
+
+        view.first_challenge_layout.setOnClickListener {
+            val intent = Intent(activity, ClubChallengeMonthly50Activity::class.java)
+            startActivity(intent)
+        }
+
+        view.second_challenge_layout.setOnClickListener {
+            val intent = Intent(activity, ClubChallengeWeeklyActivity::class.java)
+            startActivity(intent)
+        }
+
+        view.third_challenge_layout.setOnClickListener {
+            val intent = Intent(activity, ClubChallengeMonthly100Activity::class.java)
+            startActivity(intent)
+        }
+
+        view.next_50_layout.setOnClickListener {
+            val intent = Intent(activity, ClubChallengeNextMonth50Activity::class.java)
+            startActivity(intent)
+        }
+        return view
     }
 
     // TODO: Rename method, update argument and hook method into UI event
