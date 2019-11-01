@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.CreationTimestamp;
@@ -44,4 +45,9 @@ public class Running {
 	// 유저 번호
 	@Column
 	private Integer userId;
+	
+	// 지도
+	@Lob
+	@Column
+	private String image;
 }

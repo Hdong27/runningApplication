@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerator;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.mysql.cj.jdbc.Blob;
 import com.server.running.group.dto.Group;
 import com.server.running.plan.dto.UserPlan;
 import com.server.running.running.dto.Running;
@@ -46,6 +47,26 @@ public class User {
 	// 비밀번호
 	@Column
 	private String password;
+	
+	// 이름
+	@Column
+	private String name;
+	
+	// 키
+	@Column
+	private String height;
+	
+	// 체중
+	@Column
+	private String weight;
+	
+	// 성별
+	@Column
+	private String gender;
+	
+	// 프로필 사진
+	@Column(columnDefinition = "BLOB")
+	private byte[] img;
 	
 	// 유저의 플랜 리스트
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
