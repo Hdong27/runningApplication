@@ -65,8 +65,8 @@ public class User {
 	private String gender;
 	
 	// 프로필 사진
-	@Column(columnDefinition = "BLOB")
-	private byte[] img;
+	@Column
+	private String img;
 	
 	// 유저의 플랜 리스트
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
