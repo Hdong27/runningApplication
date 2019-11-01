@@ -15,7 +15,15 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".MainActivity"></activity>
+        <activity android:name=".ClubChallengeNextMonth50Activity"></activity>
+        <activity android:name=".ClubChallengeMonthly100Activity" />
+        <activity android:name=".ClubChallengeWeeklyActivity" />
+        <activity
+            android:name=".Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ClubChallengeMonthly50Activity" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".SettingActivity" />
         <activity android:name=".FeedActivity" />
         <activity android:name=".ClubActivity" />
