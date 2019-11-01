@@ -17,11 +17,14 @@
             android:layout_width="wrap_content"
             android:layout_weight="33"
             android:orientation="vertical">
+
             <ImageView
+                android:id="@+id/ach_long"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:src="@drawable/ach_long"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/ach_long" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -35,11 +38,14 @@
             android:layout_width="wrap_content"
             android:layout_weight="33"
             android:orientation="vertical">
+
             <ImageView
+                android:id="@+id/ach_time"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:src="@drawable/ach_time"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/ach_time" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -54,9 +60,11 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/ach_ok"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ach_ok" />
             <TextView
                 android:layout_width="match_parent"
@@ -76,11 +84,14 @@
             android:layout_width="wrap_content"
             android:layout_weight="33"
             android:orientation="vertical">
+
             <ImageView
+                android:id="@+id/ach_mile"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:src="@drawable/ach_mile"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/ach_mile" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -93,11 +104,14 @@
             android:layout_width="wrap_content"
             android:layout_weight="33"
             android:orientation="vertical">
+
             <ImageView
-                android:layout_width="wrap_content"
+                android:id="@+id/ach_fk"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="3"
-                android:src="@drawable/ach_fk"/>
+                android:scaleType="centerCrop"
+                android:src="@drawable/ach_fk" />
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
@@ -112,9 +126,11 @@
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/ach_tk"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ach_tk" />
             <TextView
                 android:layout_width="match_parent"
@@ -140,9 +156,11 @@
             android:visibility="visible">
 
             <ImageView
+                android:id="@+id/ach_hm"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ach_hm" />
 
             <TextView
@@ -162,9 +180,11 @@
             android:visibility="visible">
 
             <ImageView
+                android:id="@+id/ach_ma"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_weight="3"
+                android:scaleType="centerCrop"
                 android:src="@drawable/ach_ma" />
 
             <TextView

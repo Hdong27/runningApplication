@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_main_level.view.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +42,17 @@ class MainLevelFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_level, container, false)
+        var myView :View = inflater.inflate(R.layout.fragment_main_level, container, false)
+        var list : ArrayList<String> = ArrayList()
+
+        if(!list.contains("ok"))myView.level_volt.alpha=0.5f
+        if(!list.contains("ok"))myView.level_orange.alpha=0.5f
+        if(!list.contains("ok"))myView.level_black.alpha=0.5f
+        if(!list.contains("ok"))myView.level_blue.alpha=0.5f
+        if(!list.contains("ok"))myView.level_green.alpha=0.5f
+        if(!list.contains("ok"))myView.level_purple.alpha=0.5f
+
+        return myView
     }
 
     // TODO: Rename method, update argument and hook method into UI event
