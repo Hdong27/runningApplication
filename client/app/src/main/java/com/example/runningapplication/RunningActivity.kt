@@ -28,6 +28,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_running.*
 import android.Manifest
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Base64
 import android.util.Log
 import androidx.core.app.ActivityCompat
@@ -41,7 +42,7 @@ class RunningActivity : AppCompatActivity() ,
     BottomNavigationView.OnNavigationItemSelectedListener,
     OnMapReadyCallback, GoogleMap.SnapshotReadyCallback {
 
-    private var polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
+    private var polyLineOptions = PolylineOptions().width(0f).color(Color.RED)
     private lateinit var mMap : GoogleMap
     private lateinit var fusedLocationProviderClient : FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
@@ -49,7 +50,6 @@ class RunningActivity : AppCompatActivity() ,
     private var flag : Int = 1
     private var dir : Double = 0.0
     private var stoptime:Long = 0
-    private lateinit var marker : Marker
 
     // 위치 정보를 얻기 위한 초기화
     private fun locationinit() {
@@ -74,13 +74,19 @@ class RunningActivity : AppCompatActivity() ,
                 mMap.clear()
                 mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
                 mMap.addMarker(MarkerOptions().position(latLng).title("Current Location"))
+                polyLineOptions.add(latLng)
+                mMap.addPolyline(polyLineOptions)
 
                 if(flag == 1) { // 시작 전, 정지 버튼 클릭시
                     Toast.makeText(applicationContext, latLng.toString(), Toast.LENGTH_SHORT).show()
                 } else if(flag == 2) {  // 시작 버튼 클릭시
-                    mMap.addPolyline(polyLineOptions)
                     if(polyLineOptions.points.size > 1) {
                         dir += computeDistanceBetween(polyLineOptions.points[polyLineOptions.points.size - 2], polyLineOptions.points[polyLineOptions.points.size - 1])
+                        Toast.makeText(
+                            applicationContext,
+                            polyLineOptions.points[polyLineOptions.points.size - 1].toString(),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
                     totalDir.setText(String.format("%.2f", dir))
                     var time : CharSequence = chronometer2.text
@@ -88,12 +94,7 @@ class RunningActivity : AppCompatActivity() ,
                     totalCal.setText(String.format("%.1fkcal", totalTime * 0.55))
                     totalVec.setText(String.format("%.2fm/s", dir / totalTime))
                     // Toast.makeText(applicationContext, polyLineOptions.points[polyLineOptions.points.size-1].toString(), Toast.LENGTH_LONG).show()
-                    Toast.makeText(applicationContext, totalTime.toString(), Toast.LENGTH_SHORT).show()
                 } else {  // 일시정지 버튼 클릭시
-                    polyLineOptions.add(latLng)
-                    mMap.addPolyline(polyLineOptions)
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
-                    mMap.addMarker(MarkerOptions().position(latLng).visible(false))
                     if(polyLineOptions.points.size > 0) {
                         Toast.makeText(applicationContext, polyLineOptions.points[polyLineOptions.points.size-1].toString(), Toast.LENGTH_LONG).show()
                     }
@@ -120,9 +121,10 @@ class RunningActivity : AppCompatActivity() ,
         // ret를 img로 보내서 DB 저장
 
         // 반대로 비트맵 만들기
-//        val bImage: ByteArray = Base64.decode(ret, 0)
-//        val bais = ByteArrayInputStream(bImage)
-//        val bm: Bitmap? = BitmapFactory.decodeStream(bais)
+        val bImage: ByteArray = Base64.decode(ret, 0)
+        val bais = ByteArrayInputStream(bImage)
+        val bm: Bitmap? = BitmapFactory.decodeStream(bais)
+        imageView2.setImageBitmap(bm)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -144,8 +146,17 @@ class RunningActivity : AppCompatActivity() ,
             start_btn.visibility = View.GONE
             pause_btn.visibility = View.VISIBLE
         }
+
+        // 일시정지 후 재시작 버튼
+        restart_btn.setOnClickListener {
+            flag = 2
+            Toast.makeText(this.applicationContext, "재시작", Toast.LENGTH_SHORT).show()
+
+            restart_btn.visibility = View.GONE
+            pause_btn.visibility = View.VISIBLE
+        }
+
         pause_btn.setOnClickListener {
-            polyLineOptions = PolylineOptions().width(0f)
             stoptime = chronometer2.base - SystemClock.elapsedRealtime()
             chronometer2.stop()
 
@@ -153,7 +164,7 @@ class RunningActivity : AppCompatActivity() ,
             Toast.makeText(this.applicationContext, "일시정지", Toast.LENGTH_SHORT).show()
 
             pause_btn.visibility = View.GONE
-            start_btn.visibility = View.VISIBLE
+            restart_btn.visibility = View.VISIBLE
         }
 
         // 저장을 할건지 말건지
@@ -166,17 +177,16 @@ class RunningActivity : AppCompatActivity() ,
             chronometer2.stop()
 
             flag = 1
-            mMap.clear()
-            polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
 
-            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-            mapFragment.getMapAsync(this)
-            Toast.makeText(this.applicationContext, "종료", Toast.LENGTH_SHORT).show()
+            // mMap.addPolyline(polyLineOptions)
+            mMap.snapshot(this)
+
+            polyLineOptions = PolylineOptions().width(0f)
 
             start_btn.visibility = View.VISIBLE
             pause_btn.visibility = View.GONE
 
-            mMap.snapshot(this)
+
         }
         // 버튼 스톱워치
 
