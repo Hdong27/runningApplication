@@ -27,13 +27,19 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_running.*
 import android.Manifest
+import android.graphics.Bitmap
+import android.util.Base64
+import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.SphericalUtil.computeDistanceBetween
 import org.jetbrains.anko.*
+import java.io.ByteArrayOutputStream
+import java.io.ByteArrayInputStream
 
 class RunningActivity : AppCompatActivity() ,
     BottomNavigationView.OnNavigationItemSelectedListener,
-    OnMapReadyCallback {
+    OnMapReadyCallback, GoogleMap.SnapshotReadyCallback {
 
     private var polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
     private lateinit var mMap : GoogleMap
@@ -43,6 +49,7 @@ class RunningActivity : AppCompatActivity() ,
     private var flag : Int = 1
     private var dir : Double = 0.0
     private var stoptime:Long = 0
+    private lateinit var marker : Marker
 
     // 위치 정보를 얻기 위한 초기화
     private fun locationinit() {
@@ -63,16 +70,14 @@ class RunningActivity : AppCompatActivity() ,
 
             location?.run {
                 val latLng = LatLng(latitude, longitude)
+
+                mMap.clear()
+                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
+                mMap.addMarker(MarkerOptions().position(latLng).title("Current Location"))
+
                 if(flag == 1) { // 시작 전, 정지 버튼 클릭시
-                    mMap.clear()
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                    mMap.addMarker(MarkerOptions().position(latLng).title("Current Location"))
                     Toast.makeText(applicationContext, latLng.toString(), Toast.LENGTH_SHORT).show()
                 } else if(flag == 2) {  // 시작 버튼 클릭시
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
-                    mMap.addMarker(MarkerOptions().position(latLng).visible(false))
-
-                    polyLineOptions.add(latLng)
                     mMap.addPolyline(polyLineOptions)
                     if(polyLineOptions.points.size > 1) {
                         dir += computeDistanceBetween(polyLineOptions.points[polyLineOptions.points.size - 2], polyLineOptions.points[polyLineOptions.points.size - 1])
@@ -87,7 +92,7 @@ class RunningActivity : AppCompatActivity() ,
                 } else {  // 일시정지 버튼 클릭시
                     polyLineOptions.add(latLng)
                     mMap.addPolyline(polyLineOptions)
-                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f))
+                    mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 17f))
                     mMap.addMarker(MarkerOptions().position(latLng).visible(false))
                     if(polyLineOptions.points.size > 0) {
                         Toast.makeText(applicationContext, polyLineOptions.points[polyLineOptions.points.size-1].toString(), Toast.LENGTH_LONG).show()
@@ -96,6 +101,28 @@ class RunningActivity : AppCompatActivity() ,
 
             }
         }
+    }
+
+    override fun onSnapshotReady(p0: Bitmap) {
+        var tb = Bitmap.createBitmap(p0, 0, 0, p0.width, p0.height)
+        val baos = ByteArrayOutputStream()
+
+        tb.compress(
+            Bitmap.CompressFormat.PNG,
+            100,
+            baos
+        ) //bm is the bitmap object
+
+        val b: ByteArray = baos.toByteArray()
+
+        var ret = Base64.encodeToString(b, Base64.DEFAULT)
+        Log.d("test", ret)
+        // ret를 img로 보내서 DB 저장
+
+        // 반대로 비트맵 만들기
+//        val bImage: ByteArray = Base64.decode(ret, 0)
+//        val bais = ByteArrayInputStream(bImage)
+//        val bm: Bitmap? = BitmapFactory.decodeStream(bais)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -141,10 +168,15 @@ class RunningActivity : AppCompatActivity() ,
             flag = 1
             mMap.clear()
             polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
+
+            val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+            mapFragment.getMapAsync(this)
             Toast.makeText(this.applicationContext, "종료", Toast.LENGTH_SHORT).show()
 
             start_btn.visibility = View.VISIBLE
             pause_btn.visibility = View.GONE
+
+            mMap.snapshot(this)
         }
         // 버튼 스톱워치
 
@@ -202,6 +234,7 @@ class RunningActivity : AppCompatActivity() ,
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
+
         mMap = googleMap
         val SEOUL = LatLng(37.56, 126.97)
         val markerOptions = MarkerOptions()
@@ -210,6 +243,7 @@ class RunningActivity : AppCompatActivity() ,
         mMap.addMarker(markerOptions.visible(false))
         mMap.moveCamera(CameraUpdateFactory.newLatLng(SEOUL))
         mMap.animateCamera(CameraUpdateFactory.zoomTo(10f))
+        //googleMap.snapshot(this)
     }
 
     private val gps_request_code = 1000
