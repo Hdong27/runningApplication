@@ -58,6 +58,7 @@
                     android:layout_weight="33"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/totalDir"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="2"
@@ -78,6 +79,7 @@
                     android:layout_weight="33"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/totalCal"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="2"
@@ -98,6 +100,7 @@
                     android:layout_weight="33"
                     android:orientation="vertical">
                     <TextView
+                        android:id="@+id/totalVec"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="2"
@@ -124,14 +127,12 @@
             android:layout_weight="3"
             android:orientation="vertical">
             <!--        지도넣는부분-->
-            <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:map="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
+            <fragment
                 android:id="@+id/map"
                 android:name="com.google.android.gms.maps.SupportMapFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context=".MapsFragment"/>
+                tools:context=".MapsFragment" />
 
         </LinearLayout>
 
