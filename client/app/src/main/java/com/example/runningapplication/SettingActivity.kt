@@ -33,7 +33,11 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         settingMenu.setOnNavigationItemSelectedListener(this)
         settingMenu.selectedItemId = R.id.setting
 
-
+        genderVal.text=settings.getString("gender","여성")
+        email.text=settings.getString("email","dudaduada")
+        name.text=settings.getString("name","옹붐바바")
+        heightVal.text=settings.getInt("height",181).toString()
+        weightVal.text=settings.getInt("weight",70).toString()
         ProfileImage.background = ShapeDrawable(OvalShape())
         ProfileImage.clipToOutline = true
 
