@@ -1,5 +1,6 @@
 package com.example.runningapplication
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,12 +26,12 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://52.79.200.149:8080")
+            .baseUrl("http://70.12.247.54:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
         var server = retrofit.create(UserService::class.java)
-
+        val runningIntent = Intent(this, RunningActivity::class.java)
         pwdChk.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
@@ -85,8 +86,11 @@ class SignUpActivity : AppCompatActivity() {
             Log.d("",parameters.toString())
             server.signUp(parameters).enqueue(object : Callback<Boolean>{
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
-                    Log.d("ㅠㅠ",response.toString())
-                    Toast.makeText(applicationContext, response.toString(), Toast.LENGTH_SHORT).show()
+                    if(response.body()==true){
+                        startActivity(runningIntent)
+                    }else{
+                        Toast.makeText(applicationContext, "가입 실패", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 override fun onFailure(call: Call<Boolean>, t: Throwable) {

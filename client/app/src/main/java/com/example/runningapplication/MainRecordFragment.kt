@@ -3,10 +3,15 @@ package com.example.runningapplication
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
+import android.util.AttributeSet
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import kotlinx.android.synthetic.main.fragment_main_record.view.*
+import kotlinx.android.synthetic.main.item_record.view.*
+import java.util.jar.Attributes
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,7 +45,13 @@ class MainRecordFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main_record, container, false)
+        var recordlist=inflater.inflate(R.layout.fragment_main_record, container, false)
+        var recorditem=inflater.inflate(R.layout.item_record,recordlist.recordList,true)
+        recorditem.today.text="어제"
+        recorditem.day.text="화요일"
+        recorditem.distance.text="42.195"
+
+        return recordlist
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -38,6 +38,12 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         var size=(displayRectangle.width()*0.3f).toInt()
         ProfileImage.layoutParams.height=size
         ProfileImage.layoutParams.width=size
+
+        genderVal.text=settings.getString("gender","여성")
+        email.text=settings.getString("email","dudaduada")
+        name.text=settings.getString("name","옹붐바바")
+        heightVal.text=settings.getInt("height",181).toString()
+        weightVal.text=settings.getInt("weight",70).toString()
         ProfileImage.background = ShapeDrawable(OvalShape())
         ProfileImage.clipToOutline = true
         ProfileImage.requestLayout()

@@ -26,7 +26,7 @@ class LoginActivity : AppCompatActivity() {
         var editor: SharedPreferences.Editor = settings.edit()
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://52.79.200.149:8080")
+            .baseUrl("http://70.12.247.54:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val loginIntent = Intent(this, RunningActivity::class.java)
@@ -45,10 +45,17 @@ class LoginActivity : AppCompatActivity() {
                         if(response.body()?.uid.equals("0")) {
                         } else {
                             var user:User? = response.body()
+
                             Log.d("user",user?.email.toString())
                             Log.d("user",user?.password.toString())
                             editor.putBoolean("AutoLogin",true)
+                            editor.putString("name",user?.name.toString())
                             editor.putString("email",user?.email.toString())
+                            editor.putString("password",user?.password.toString())
+                            editor.putString("gender",user?.gender.toString())
+                            editor.putInt("height",user?.height!!.toInt())
+                            editor.putInt("weight",user?.weight!!.toInt())
+                            editor.putString("img",user?.img.toString())
                             editor.commit()
                             Toast.makeText(applicationContext, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                             startActivity(loginIntent)
