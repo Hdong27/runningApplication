@@ -201,6 +201,7 @@ class RunningActivity : AppCompatActivity() ,
             reset_btn.setTextColor(resources.getColor(R.color.White))
             start_btn.visibility = View.GONE
             pause_btn.visibility = View.VISIBLE
+            reset_btn.isEnabled = true
 
             // server 통신
 
@@ -274,6 +275,7 @@ class RunningActivity : AppCompatActivity() ,
             pause_btn.visibility = View.GONE
             reset_btn.setBackgroundResource(R.color.White)
             reset_btn.setTextColor(resources.getColor(R.color.Black))
+            reset_btn.isEnabled = false
 
         }
         // 버튼 스톱워치
