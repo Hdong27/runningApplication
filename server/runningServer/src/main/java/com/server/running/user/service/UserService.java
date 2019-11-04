@@ -2,7 +2,9 @@ package com.server.running.user.service;
 
 import java.util.List;
 
+import com.server.running.running.dto.FriendRunning;
 import com.server.running.user.dto.Friend;
+import com.server.running.user.dto.TotalFriend;
 import com.server.running.user.dto.User;
 
 public interface UserService {
@@ -29,4 +31,10 @@ public interface UserService {
 
 	// 친구 추가
 	public Boolean addFriend(Friend friend);
+
+	// 친구 러닝 데이터 조회
+	public List<FriendRunning> findMyFriends(Integer uid);
+
+	// 친구 랭킹
+	public List<TotalFriend> selectMyFriends(Integer uid);
 }
