@@ -27,14 +27,26 @@ import com.google.android.gms.maps.model.PolylineOptions
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_running.*
 import android.Manifest
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.util.Log
 import androidx.core.app.ActivityCompat
+import com.example.runningapplication.data.model.Running
+import com.example.runningapplication.data.model.User
+import com.example.runningapplication.service.RunningService
+import com.example.runningapplication.service.UserService
 import com.google.android.gms.maps.model.Marker
 import com.google.maps.android.SphericalUtil.computeDistanceBetween
 import org.jetbrains.anko.*
+import org.jetbrains.anko.custom.async
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
 import java.io.ByteArrayInputStream
 
@@ -50,6 +62,8 @@ class RunningActivity : AppCompatActivity() ,
     private var flag : Int = 1
     private var dir : Double = 0.0
     private var stoptime:Long = 0
+    private lateinit var running1 : Running
+    private lateinit var server : RunningService
 
     // 위치 정보를 얻기 위한 초기화
     private fun locationinit() {
@@ -116,23 +130,62 @@ class RunningActivity : AppCompatActivity() ,
 
         val b: ByteArray = baos.toByteArray()
 
+
         var ret = Base64.encodeToString(b, Base64.DEFAULT)
-        Log.d("test", ret)
+
+        // server 통신
+        var parameters = HashMap<String,Any>()
+        parameters.put("userId",running1!!.userId!!)
+        parameters.put("rid",running1!!.rid!!)
+        parameters.put("starttime", running1!!.starttime!!)
+        parameters.put("distance", totalDir.text.toString().toDouble())
+        parameters.put("image", ret)
+
+        server.endRunning(parameters).enqueue(object : Callback<Running> {
+            override fun onResponse(call: Call<Running>, response: Response<Running>) {
+                running1 = response.body()!!
+                Log.d("running1234", running1.toString())
+                Toast.makeText(applicationContext, "기록이 저장되었습니다.", Toast.LENGTH_SHORT)
+                    .show()
+
+            }
+
+            override fun onFailure(call: Call<Running>, t: Throwable) {
+                Log.d("test123", t.localizedMessage)
+            }
+        })
+
+
+
+
+
         // ret를 img로 보내서 DB 저장
 
         // 반대로 비트맵 만들기
-        val bImage: ByteArray = Base64.decode(ret, 0)
-        val bais = ByteArrayInputStream(bImage)
-        val bm: Bitmap? = BitmapFactory.decodeStream(bais)
-        imageView2.setImageBitmap(bm)
+//        val bImage: ByteArray = Base64.decode(ret, 0)
+//        val bais = ByteArrayInputStream(bImage)
+//        val bm: Bitmap? = BitmapFactory.decodeStream(bais)
+
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_running)
 
+
+        running1 = Running()
+
+
         runningMenu.setOnNavigationItemSelectedListener(this)
         runningMenu.selectedItemId = R.id.running
+
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://70.12.247.54:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        server = retrofit.create(RunningService::class.java)
+        var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
 
         // 버튼 스톱워치
         start_btn.setOnClickListener {
@@ -148,6 +201,27 @@ class RunningActivity : AppCompatActivity() ,
             reset_btn.setTextColor(resources.getColor(R.color.White))
             start_btn.visibility = View.GONE
             pause_btn.visibility = View.VISIBLE
+
+            // server 통신
+
+            var parameters = HashMap<String,Int>()
+            Log.d("useridid", settings.getInt("uid", 0).toString())
+            parameters.put("userId",settings.getInt("uid", 0))
+
+            server.startRunning(parameters).enqueue(object : Callback<Running> {
+                override fun onResponse(call: Call<Running>, response: Response<Running>) {
+                    running1 = response.body()!!
+                    Log.d("running123", running1.toString())
+                    Toast.makeText(applicationContext, "기록이 저장되었습니다.", Toast.LENGTH_SHORT)
+                        .show()
+
+                }
+
+                override fun onFailure(call: Call<Running>, t: Throwable) {
+                    Log.d("test123", t.localizedMessage)
+                }
+            })
+
         }
 
         // 일시정지 후 재시작 버튼
@@ -190,6 +264,9 @@ class RunningActivity : AppCompatActivity() ,
 
             // mMap.addPolyline(polyLineOptions)
             mMap.snapshot(this)
+
+
+
 
             polyLineOptions = PolylineOptions().width(0f)
 
