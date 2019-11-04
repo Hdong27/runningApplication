@@ -29,7 +29,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener,
     MainRecordFragment.OnFragmentInteractionListener,
-    MainAchieveFragment.OnFragmentInteractionListener,
     MainLevelFragment.OnFragmentInteractionListener{
 
     private var tabLayout: TabLayout?=null
@@ -48,14 +47,12 @@ class MainActivity : AppCompatActivity(),
         tabLayout = mainTabs as TabLayout
         tabLayout!!.setupWithViewPager(viewPager)
         tabLayout!!.getTabAt(0)!!.setText("기록")
-        tabLayout!!.getTabAt(1)!!.setText("달성 기록")
-        tabLayout!!.getTabAt(2)!!.setText("러닝 레벨")
+        tabLayout!!.getTabAt(1)!!.setText("러닝 레벨")
     }
 
     private fun setupViewPager(viewPager: ViewPager){
         val adapter = ViewPagerAdapter(supportFragmentManager)
         adapter.addFragment(MainRecordFragment(), "record")
-        adapter.addFragment(MainAchieveFragment(), "achieve")
         adapter.addFragment(MainLevelFragment(), "level")
         viewPager.adapter = adapter
     }

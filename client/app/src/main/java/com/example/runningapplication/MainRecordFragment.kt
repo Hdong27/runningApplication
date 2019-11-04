@@ -1,9 +1,11 @@
 package com.example.runningapplication
 
+import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Rect
 import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
@@ -19,6 +21,8 @@ import com.example.runningapplication.data.model.User
 import com.example.runningapplication.service.RunningService
 import kotlinx.android.synthetic.main.fragment_main_record.view.*
 import kotlinx.android.synthetic.main.item_record.view.*
+import kotlinx.android.synthetic.main.item_record.view.mapImage
+import kotlinx.android.synthetic.main.record_detail.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -79,7 +83,6 @@ class MainRecordFragment : Fragment() {
                     Toast.makeText(activity, "성공하였습니다.", Toast.LENGTH_SHORT).show()
                     for(running in user!!.runningData!!.iterator()) {
                         var recorditem=inflater.inflate(R.layout.item_record,null)
-                        recorditem.today.text=running.rid.toString()
                         recorditem.day.text=running.endtime.toString()
                         recorditem.distance.text= running.distance.toString()
                         var ttmp = running.image
@@ -88,7 +91,22 @@ class MainRecordFragment : Fragment() {
                         val bm: Bitmap? = BitmapFactory.decodeStream(bais)
                         recorditem.mapImage.setImageBitmap(bm)
                         recorditem.setOnClickListener {
-
+                            var d= Dialog(requireContext())
+                            var dd=layoutInflater.inflate(R.layout.record_detail,null)
+                            dd.mapImage.setImageBitmap(bm)
+                            val displayRectangle = Rect()
+                            activity!!.window.decorView.getWindowVisibleDisplayFrame(displayRectangle)
+                            val iconsize = (displayRectangle.width()*0.04f).toInt()
+                            val mapsize = (displayRectangle.width()*0.75f).toInt()
+                            dd.mapImage.layoutParams.height=mapsize
+                            dd.mapImage.layoutParams.width=mapsize
+                            dd.closeMap.layoutParams.height=iconsize
+                            dd.closeMap.layoutParams.width=iconsize
+                            dd.closeMap.setOnClickListener {
+                                d.dismiss()
+                            }
+                            d.setContentView(dd)
+                            d.show()
                         }
 
                         recordlist.recordList.addView(recorditem)

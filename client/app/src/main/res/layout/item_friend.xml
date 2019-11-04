@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="20dp"
     android:gravity="center"
     android:layout_margin="15dp"
-    android:orientation="vertical"
+    android:stretchColumns="0,1,2"
     android:paddingLeft="15dp">
 
-    <LinearLayout
+    <TableRow
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:orientation="horizontal">
+        android:layout_margin="5dp">
         <TextView
             android:id="@+id/friendEmail"
             android:paddingLeft="7dp"
-            android:layout_weight="80"
+            android:layout_span="2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
@@ -23,7 +22,6 @@
             android:id="@+id/addFriend"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="20"
             android:src="@drawable/plus"/>
-    </LinearLayout>
-</LinearLayout>
+    </TableRow>
+</TableLayout>
