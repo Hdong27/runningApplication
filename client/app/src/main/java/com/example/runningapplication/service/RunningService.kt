@@ -20,6 +20,6 @@ interface RunningService {
 
     @GET("/findRunning.run")
     fun findRunning(
-        @Body parameters: HashMap<String, Any>
+        @Query("uid") uid: Int
     ):Call<User>
 }

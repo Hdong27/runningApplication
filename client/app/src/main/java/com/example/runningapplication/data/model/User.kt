@@ -9,10 +9,10 @@ data class User(
     var weight: String? = null,
     var gender: String? = null,
     var img: String? = null,
-    var userPlans : List<String> ? = null,
-    var groups : List<String> ? = null,
-    var runningData : List<String> ? = null
-//    var userPlans : List<UserPlan> ? = null,
-//    var groups : List<Group> ? = null,
-//    var runningData : List<Running> ? = null
+//    var userPlans : List<String> ? = null,
+//    var groups : List<String> ? = null,
+//    var runningData : List<String> ? = null
+    var userPlans : List<UserPlan> ? = null,
+    var groups : List<Challenge> ? = null,
+    var runningData : List<Running> ? = null
 )

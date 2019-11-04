@@ -1,16 +1,30 @@
 package com.example.runningapplication
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
+import android.util.Base64
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Toast
+import com.example.runningapplication.data.model.User
+import com.example.runningapplication.service.RunningService
 import kotlinx.android.synthetic.main.fragment_main_record.view.*
 import kotlinx.android.synthetic.main.item_record.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayInputStream
 import java.util.jar.Attributes
 
 // TODO: Rename parameter arguments, choose names that match
@@ -44,12 +58,56 @@ class MainRecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
+        // 서버 통신
+
+        var settings: SharedPreferences = activity!!.getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
+
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://70.12.247.54:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        var server = retrofit.create(RunningService::class.java)
+
         var recordlist=inflater.inflate(R.layout.fragment_main_record, container, false)
-        var recorditem=inflater.inflate(R.layout.item_record,recordlist.recordList,true)
-        recorditem.today.text="어제"
-        recorditem.day.text="화요일"
-        recorditem.distance.text="42.195"
+
+        server.findRunning(settings.getInt("uid", 0)).enqueue(object : Callback<User> {
+            override fun onResponse(call: Call<User>, response: Response<User>) {
+                if(response.code()==200){
+                    var user: User? = response.body()
+                    Log.d("제발", user?.runningData.toString())
+                    Toast.makeText(activity, "성공하였습니다.", Toast.LENGTH_SHORT).show()
+                    for(running in user!!.runningData!!.iterator()) {
+                        var recorditem=inflater.inflate(R.layout.item_record,null)
+                        recorditem.today.text=running.rid.toString()
+                        recorditem.day.text=running.endtime.toString()
+                        recorditem.distance.text= running.distance.toString()
+                        var ttmp = running.image
+                        val bImage: ByteArray = Base64.decode(ttmp, 0)
+                        val bais = ByteArrayInputStream(bImage)
+                        val bm: Bitmap? = BitmapFactory.decodeStream(bais)
+                        recorditem.mapImage.setImageBitmap(bm)
+                        recorditem.setOnClickListener {
+
+                        }
+
+                        recordlist.recordList.addView(recorditem)
+                        Log.d("test12314", running.toString())
+                    }
+
+                }else{
+                }
+            }
+
+            override fun onFailure(call: Call<User>, t: Throwable) {
+                Log.d("hi","hi")
+                Toast.makeText(activity, "로그인 실패", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+        // Inflate the layout for this fragment
+
+
 
         return recordlist
     }

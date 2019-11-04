@@ -5,8 +5,22 @@
     android:layout_marginBottom="3dp"
     android:background="#FFFFFF"
     android:gravity="center"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingLeft="15dp">
+
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/mapImage"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginRight="10dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ach_fk" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:gravity="center"
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/today"
@@ -85,4 +99,5 @@
             android:layout_height="wrap_content"
             android:text="06 : 05" />
     </LinearLayout>
+</LinearLayout>
 </LinearLayout>
