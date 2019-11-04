@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -78,6 +79,16 @@ public class User {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "users")
 	private List<Group> groups;
 	
+	// 유저의 친구 리스트
+	@JsonIgnoreProperties("friends")
+	@JoinTable(name = "friends", joinColumns = {
+			@JoinColumn(name = "lid", referencedColumnName = "uid")
+	}, inverseJoinColumns = {
+			@JoinColumn(name = "rid", referencedColumnName = "uid")
+	})
+	@ManyToMany
+	private List<User> friends;
+	
 	// 유저의 러닝 데이터 리스트
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name = "userId")
@@ -89,5 +100,13 @@ public class User {
 			groups = new ArrayList<>();
 		}
 		return groups.add(group);
+	}
+	
+	// 친구 추가(relationship)
+	public boolean addFriends(User user) {
+		if(friends == null) {
+			friends = new ArrayList<>();
+		}
+		return friends.add(user);
 	}
 }

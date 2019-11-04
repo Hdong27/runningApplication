@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.server.running.user.dto.Friend;
 import com.server.running.user.dto.User;
 import com.server.running.user.repository.UserRepository;
 import com.server.running.util.SecurityUtil;
@@ -75,5 +76,17 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return true;
 		}
+	}
+
+	// 친구 추가
+	@Override
+	public boolean meet(Friend friend) {
+		Optional<User> user1 = userRepository.findById(friend.getLid());
+		Optional<User> user2 = userRepository.findById(friend.getRid());
+		user1.get().addFriends(user2.get());
+		user2.get().addFriends(user1.get());
+		userRepository.save(user1.get());
+		userRepository.save(user2.get());
+		return true;
 	}
 }

@@ -1,8 +1,6 @@
 package com.server.running.user.service;
 
-import java.util.List;
-
-import com.server.running.running.dto.Running;
+import com.server.running.user.dto.Friend;
 import com.server.running.user.dto.User;
 
 public interface UserService {
@@ -24,4 +22,6 @@ public interface UserService {
 	// 아이디 중복 체크 요청
 	public boolean overlap(User user);
 	
+	// 친구 추가
+	public boolean meet(Friend friend);
 }

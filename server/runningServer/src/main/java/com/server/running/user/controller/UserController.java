@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.server.running.user.dto.Friend;
 import com.server.running.user.dto.User;
 import com.server.running.user.service.UserService;
 
@@ -72,5 +73,12 @@ public class UserController {
 	public ResponseEntity<Boolean> overlap(@RequestBody User user) {
 		log.debug("아이디 중복체크 요청");
 		return new ResponseEntity<Boolean>(userService.overlap(user), HttpStatus.OK);
+	}
+	
+	// 친구 추가
+	@PostMapping("/meet.run")
+	public ResponseEntity<Boolean> meet(@RequestBody Friend friend) {
+		log.debug("친구 추가");
+		return new ResponseEntity<Boolean>(userService.meet(friend), HttpStatus.OK);
 	}
 }
