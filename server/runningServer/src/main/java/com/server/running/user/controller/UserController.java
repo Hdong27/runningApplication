@@ -15,7 +15,10 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.server.running.running.dto.FriendRunning;
+import com.server.running.running.dto.Running;
 import com.server.running.user.dto.Friend;
+import com.server.running.user.dto.TotalFriend;
 import com.server.running.user.dto.User;
 import com.server.running.user.service.UserService;
 
@@ -90,4 +93,16 @@ public class UserController {
 		return new ResponseEntity<Boolean>(userService.addFriend(friend), HttpStatus.OK);
 	}
 
+	// 최근 한달 친구의 러닝 데이터 조회
+	@GetMapping("/findMyFriends.run")
+	public ResponseEntity<List<FriendRunning>> findMyFriends(@RequestParam Integer uid) {
+		log.debug("친구 러닝 데이터 조회");
+		return new ResponseEntity<List<FriendRunning>>(userService.findMyFriends(uid), HttpStatus.OK);
+	}
+	
+	// 친구 랭킹
+	@GetMapping("/selectMyFriends.run")
+	public ResponseEntity<List<TotalFriend>> selectMyFriends(@RequestParam Integer uid) {
+		return new ResponseEntity<List<TotalFriend>>(userService.selectMyFriends(uid), HttpStatus.OK);
+	}
 }

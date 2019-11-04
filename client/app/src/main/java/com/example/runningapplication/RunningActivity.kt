@@ -180,7 +180,7 @@ class RunningActivity : AppCompatActivity() ,
         runningMenu.selectedItemId = R.id.running
 
         var retrofit = Retrofit.Builder()
-            .baseUrl("http://70.12.247.54:8080")
+            .baseUrl("http://52.79.200.149:8080")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
@@ -213,7 +213,7 @@ class RunningActivity : AppCompatActivity() ,
                 override fun onResponse(call: Call<Running>, response: Response<Running>) {
                     running1 = response.body()!!
                     Log.d("running123", running1.toString())
-                    Toast.makeText(applicationContext, "기록이 저장되었습니다.", Toast.LENGTH_SHORT)
+                    Toast.makeText(applicationContext, "기록 측정이 시작되었습니다.", Toast.LENGTH_SHORT)
                         .show()
 
                 }
@@ -227,6 +227,8 @@ class RunningActivity : AppCompatActivity() ,
 
         // 일시정지 후 재시작 버튼
         restart_btn.setOnClickListener {
+            chronometer2.base = SystemClock.elapsedRealtime() + stoptime
+            chronometer2.start()
             flag = 2
             Toast.makeText(this.applicationContext, "재시작", Toast.LENGTH_SHORT).show()
 
@@ -273,6 +275,7 @@ class RunningActivity : AppCompatActivity() ,
 
             start_btn.visibility = View.VISIBLE
             pause_btn.visibility = View.GONE
+            restart_btn.visibility = View.GONE
             reset_btn.setBackgroundResource(R.color.White)
             reset_btn.setTextColor(resources.getColor(R.color.Black))
             reset_btn.isEnabled = false
