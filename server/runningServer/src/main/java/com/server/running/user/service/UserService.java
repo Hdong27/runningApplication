@@ -24,4 +24,7 @@ public interface UserService {
 	
 	// 친구 추가
 	public boolean meet(Friend friend);
+
+	// 친구 제거
+	public boolean meetOut(Friend friend);
 }

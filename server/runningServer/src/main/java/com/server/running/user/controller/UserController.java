@@ -81,4 +81,11 @@ public class UserController {
 		log.debug("친구 추가");
 		return new ResponseEntity<Boolean>(userService.meet(friend), HttpStatus.OK);
 	}
+	
+	// 친구 제거
+	@DeleteMapping("/meetOut.run")
+	public ResponseEntity<Boolean> meetOut(@RequestBody Friend friend) {
+		log.debug("친구 제거");
+		return new ResponseEntity<Boolean>(userService.meetOut(friend), HttpStatus.OK);
+	}
 }

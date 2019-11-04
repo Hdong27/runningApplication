@@ -61,6 +61,10 @@ public class GroupServiceImpl implements GroupService {
 
 	@Override
 	public List<Group> findAllTeam() {
-		return groupRepository.findAll();
+		List<Group> groups = groupRepository.findAll();
+		for (Group group : groups) {
+			group.setRunnerSum(group.getUsers().size());
+		}
+		return groups;
 	}
 }

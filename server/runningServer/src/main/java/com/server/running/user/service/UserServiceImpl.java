@@ -89,4 +89,26 @@ public class UserServiceImpl implements UserService {
 		userRepository.save(user2.get());
 		return true;
 	}
+
+	// 친구 제거
+	@Override
+	public boolean meetOut(Friend friend) {
+		Optional<User> user1 = userRepository.findById(friend.getLid());
+		Optional<User> user2 = userRepository.findById(friend.getRid());
+		for (int i = 0; i < user1.get().getFriends().size(); i++) {
+			if(user2.get().getUid() == user1.get().getFriends().get(i).getUid()) {
+				user1.get().getFriends().remove(i);
+				break;
+			}
+		}
+		for (int i = 0; i < user2.get().getFriends().size(); i++) {
+			if(user1.get().getUid() == user2.get().getFriends().get(i).getUid()) {
+				user2.get().getFriends().remove(i);
+				break;
+			}
+		}
+		userRepository.save(user1.get());
+		userRepository.save(user2.get());
+		return true;
+	}
 }
