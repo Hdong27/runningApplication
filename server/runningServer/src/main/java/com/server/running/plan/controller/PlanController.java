@@ -13,6 +13,11 @@ import com.server.running.plan.service.PlanService;
 
 import lombok.extern.slf4j.Slf4j;
 
+
+/*
+ * plan 관련 기능 group에 challenge 형식으로 통합
+ */
+
 @Controller
 @Slf4j
 public class PlanController {

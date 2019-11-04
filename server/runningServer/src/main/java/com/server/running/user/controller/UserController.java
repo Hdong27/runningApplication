@@ -1,5 +1,7 @@
 package com.server.running.user.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +13,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.server.running.user.dto.Friend;
 import com.server.running.user.dto.User;
 import com.server.running.user.service.UserService;
 
@@ -62,9 +66,9 @@ public class UserController {
 	
 	// 러닝 데이터 조회
 	@GetMapping("/findRunning.run")
-	public ResponseEntity<User> findRunning(@RequestBody User user) {
+	public ResponseEntity<User> findRunning(@RequestParam Integer uid) {
 		log.debug("전체 러닝 데이터 조회 요청");
-		return new ResponseEntity<User>(userService.findRunning(user), HttpStatus.OK);
+		return new ResponseEntity<User>(userService.findRunning(uid), HttpStatus.OK);
 	}
 	
 	// 아이디 중복 체크
@@ -73,4 +77,17 @@ public class UserController {
 		log.debug("아이디 중복체크 요청");
 		return new ResponseEntity<Boolean>(userService.overlap(user), HttpStatus.OK);
 	}
+	
+	// 친구검색
+	@GetMapping("/findFriends.run")
+	public ResponseEntity<List<String>> findFriends(@RequestParam String email) {
+		return new ResponseEntity<List<String>>(userService.findFriends(email), HttpStatus.OK);
+	}
+	
+	// 이메일로 친구 추가
+	@PostMapping("/addFriend.run")
+	public ResponseEntity<Boolean> addFriend(@RequestBody Friend friend) {
+		return new ResponseEntity<Boolean>(userService.addFriend(friend), HttpStatus.OK);
+	}
+
 }

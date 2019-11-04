@@ -22,5 +22,5 @@ public interface GroupService {
 	public Boolean outTeam(UserGroup userGroup);
 	
 	// 전체 그룹 정보 조회
-	public List<Group> findAllTeam();
+	public List<Group> findAllTeam(int uid);
 }

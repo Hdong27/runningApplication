@@ -1,10 +1,13 @@
 package com.server.running.user.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.server.running.user.dto.Friend;
 import com.server.running.user.dto.User;
 import com.server.running.user.repository.UserRepository;
 import com.server.running.util.SecurityUtil;
@@ -62,8 +65,15 @@ public class UserServiceImpl implements UserService {
 
 	// 러닝 데이터 조회
 	@Override
-	public User findRunning(User user) {
-		return userRepository.findById(user.getUid()).get();
+	public User findRunning(int uid) {
+		User user = userRepository.findById(uid).get();
+		for (int i = 0; i < user.getRunningData().size(); i++) {
+			if(user.getRunningData().get(i).getStarttime().equals(user.getRunningData().get(i).getEndtime())) {
+				user.getRunningData().remove(i);
+				i--;
+			}
+		}
+		return user;
 	}
 
 	// 아이디 중복체크 요청
@@ -75,5 +85,28 @@ public class UserServiceImpl implements UserService {
 		} else {
 			return true;
 		}
+	}
+
+	// 친구 검색
+	@Override
+	public List<String> findFriends(String email) {
+		List<User> friends = userRepository.findByEmailContaining(email);
+		List<String> list = new ArrayList<String>();
+		for (User user : friends) {
+			list.add(user.getEmail());
+		}
+		return list;
+	}
+
+	// 친구 추가
+	@Override
+	public Boolean addFriend(Friend friend) {
+		User user = friend.getUser();
+		Optional<User> fri = userRepository.findByEmail(friend.getFemail());
+		user.addFriends(fri.get());
+		fri.get().addFriends(user);
+		userRepository.save(user);
+		userRepository.save(fri.get());
+		return true;
 	}
 }
