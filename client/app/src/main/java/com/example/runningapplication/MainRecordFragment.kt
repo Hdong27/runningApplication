@@ -6,6 +6,7 @@ import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
@@ -96,7 +97,7 @@ class MainRecordFragment : Fragment() {
                             dd.mapImage.setImageBitmap(bm)
                             val displayRectangle = Rect()
                             activity!!.window.decorView.getWindowVisibleDisplayFrame(displayRectangle)
-                            val iconsize = (displayRectangle.width()*0.04f).toInt()
+                            val iconsize = (displayRectangle.width()*0.05f).toInt()
                             val mapsize = (displayRectangle.width()*0.75f).toInt()
                             dd.mapImage.layoutParams.height=mapsize
                             dd.mapImage.layoutParams.width=mapsize
@@ -106,6 +107,7 @@ class MainRecordFragment : Fragment() {
                                 d.dismiss()
                             }
                             d.setContentView(dd)
+                            d.window!!.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
                             d.show()
                         }
 
