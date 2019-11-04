@@ -21,4 +21,14 @@ interface UserService {
     fun emailCheck(
         @Body parameters: HashMap<String,Any>
     ):Call<Boolean>
+
+    @GET("/findFriends.run")
+    fun findFriends(
+        @Query("email") email: String
+    ):Call<List<String>>
+
+    @POST("/friendAdd.run")
+    fun friendAdd(
+        @Body param: HashMap<String, Any>
+    ):Call<Boolean>
 }
