@@ -52,8 +52,11 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
                     var records: List<FriendsRecord>? = response.body()
 
                     Toast.makeText(applicationContext, "성공하였습니다.", Toast.LENGTH_SHORT).show()
-                    for(running in records!!.iterator()) {
-                        Log.d("saasgasfsa", running.toString())
+                    for(record in records!!.iterator()) {
+                        Log.d("saasgasfsa", record.userName.toString())
+                        Log.d("saasgasfsa", record.userEmail.toString())
+                        Log.d("saasgasfsa", record.running!!.image.toString())
+
                     }
 
                 }else{
