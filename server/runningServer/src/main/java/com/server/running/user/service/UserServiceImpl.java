@@ -1,5 +1,7 @@
 package com.server.running.user.service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,8 +65,15 @@ public class UserServiceImpl implements UserService {
 
 	// 러닝 데이터 조회
 	@Override
-	public User findRunning(User user) {
-		return userRepository.findById(user.getUid()).get();
+	public User findRunning(int uid) {
+		User user = userRepository.findById(uid).get();
+		for (int i = 0; i < user.getRunningData().size(); i++) {
+			if(user.getRunningData().get(i).getStarttime().equals(user.getRunningData().get(i).getEndtime())) {
+				user.getRunningData().remove(i);
+				i--;
+			}
+		}
+		return user;
 	}
 
 	// 아이디 중복체크 요청
@@ -78,37 +87,26 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 
-	// 친구 추가
+	// 친구 검색
 	@Override
-	public boolean meet(Friend friend) {
-		Optional<User> user1 = userRepository.findById(friend.getLid());
-		Optional<User> user2 = userRepository.findById(friend.getRid());
-		user1.get().addFriends(user2.get());
-		user2.get().addFriends(user1.get());
-		userRepository.save(user1.get());
-		userRepository.save(user2.get());
-		return true;
+	public List<String> findFriends(String email) {
+		List<User> friends = userRepository.findByEmailContaining(email);
+		List<String> list = new ArrayList<String>();
+		for (User user : friends) {
+			list.add(user.getEmail());
+		}
+		return list;
 	}
 
-	// 친구 제거
+	// 친구 추가
 	@Override
-	public boolean meetOut(Friend friend) {
-		Optional<User> user1 = userRepository.findById(friend.getLid());
-		Optional<User> user2 = userRepository.findById(friend.getRid());
-		for (int i = 0; i < user1.get().getFriends().size(); i++) {
-			if(user2.get().getUid() == user1.get().getFriends().get(i).getUid()) {
-				user1.get().getFriends().remove(i);
-				break;
-			}
-		}
-		for (int i = 0; i < user2.get().getFriends().size(); i++) {
-			if(user1.get().getUid() == user2.get().getFriends().get(i).getUid()) {
-				user2.get().getFriends().remove(i);
-				break;
-			}
-		}
-		userRepository.save(user1.get());
-		userRepository.save(user2.get());
+	public Boolean addFriend(Friend friend) {
+		User user = friend.getUser();
+		Optional<User> fri = userRepository.findByEmail(friend.getFemail());
+		user.addFriends(fri.get());
+		fri.get().addFriends(user);
+		userRepository.save(user);
+		userRepository.save(fri.get());
 		return true;
 	}
 }

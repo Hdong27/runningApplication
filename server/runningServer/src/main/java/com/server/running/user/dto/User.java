@@ -42,7 +42,7 @@ public class User {
 	private Integer uid;
 	
 	// 아이디
-	@Column
+	@Column(unique = true)
 	private String email;
 	
 	// 비밀번호

@@ -56,6 +56,9 @@ public class Group {
 	// 참여자 수
 	private Integer runnerSum;
 	
+	// 해당 유저 참여 여부
+	private boolean isActive;
+	
 	// 그룹의 플랜 리스트
 //	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //	@JoinColumn(name="groupId")

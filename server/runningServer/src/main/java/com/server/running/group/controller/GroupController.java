@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.server.running.group.dto.Group;
 import com.server.running.group.dto.UserGroup;
@@ -62,9 +63,14 @@ public class GroupController {
 	}
 	
 	// 전체 그룹 정보 조회
+//	@GetMapping("/findAllTeam.run")
+//	public ResponseEntity<List<Group>> findAllTeam(HttpServletRequest request) {
+//		log.debug("전체 그룹 정보 요청");
+//		return new ResponseEntity<List<Group>>(groupService.findAllTeam(), HttpStatus.OK);
+//	}
 	@GetMapping("/findAllTeam.run")
-	public ResponseEntity<List<Group>> findAllTeam(HttpServletRequest request) {
+	public ResponseEntity<List<Group>> findAllTeam(@RequestParam Integer uid) {
 		log.debug("전체 그룹 정보 요청");
-		return new ResponseEntity<List<Group>>(groupService.findAllTeam(), HttpStatus.OK);
+		return new ResponseEntity<List<Group>>(groupService.findAllTeam(uid), HttpStatus.OK);
 	}
 }
