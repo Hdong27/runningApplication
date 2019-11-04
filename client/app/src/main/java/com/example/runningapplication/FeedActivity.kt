@@ -4,30 +4,32 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.widget.RadioButton
+
 import android.widget.Toast
-import com.example.runningapplication.data.model.User
+import com.example.runningapplication.data.model.FriendsRecord
 import com.example.runningapplication.service.UserService
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.activity_club.*
+
 import kotlinx.android.synthetic.main.activity_feed.*
-import kotlinx.android.synthetic.main.activity_setting.*
-import kotlinx.android.synthetic.main.frienddialog.*
+
 import kotlinx.android.synthetic.main.frienddialog.view.*
-import kotlinx.android.synthetic.main.genderdialog.*
-import kotlinx.android.synthetic.main.genderdialog.view.*
+
 import kotlinx.android.synthetic.main.item_friend.view.*
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItemSelectedListener {
 
@@ -42,6 +44,33 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
             .build()
 
         var server = retrofit.create(UserService::class.java)
+        Log.d("asdfasdfsadfgg111", settings.getInt("uid", 0).toString())
+
+        server.findMyFriends(settings.getInt("uid", 0)).enqueue(object : Callback<List<FriendsRecord>> {
+            override fun onResponse(call: Call<List<FriendsRecord>>, response: Response<List<FriendsRecord>>) {
+                if(response.code()==200){
+                    var records: List<FriendsRecord>? = response.body()
+
+                    Toast.makeText(applicationContext, "성공하였습니다.", Toast.LENGTH_SHORT).show()
+                    for(record in records!!.iterator()) {
+                        Log.d("saasgasfsa", record.userName.toString())
+                        Log.d("saasgasfsa", record.userEmail.toString())
+                        Log.d("saasgasfsa", record.running!!.image.toString())
+
+                    }
+
+                }else{
+                }
+            }
+
+            override fun onFailure(call: Call<List<FriendsRecord>>, t: Throwable) {
+                Log.d("hi","hi")
+                Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
+        //
 
         feedMenu.setOnNavigationItemSelectedListener(this)
         feedMenu.selectedItemId = R.id.feed
