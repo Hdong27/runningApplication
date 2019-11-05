@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 import com.server.running.group.dto.Group;
 import com.server.running.group.dto.UserGroup;
 import com.server.running.group.repository.GroupRepository;
+import com.server.running.user.dto.User;
+import com.server.running.user.repository.UserRepository;
 
 @Service
 public class GroupServiceImpl implements GroupService {
 	@Autowired
 	private GroupRepository groupRepository;
+	@Autowired
+	private UserRepository userRepository;
 	
 	// 그룹 생성
 	@Override
@@ -60,7 +64,21 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<Group> findAllTeam() {
-		return groupRepository.findAll();
+	public List<Group> findAllTeam(int uid) {
+		List<Group> groups = groupRepository.findAll();
+		Optional<User> user = userRepository.findById(uid);
+		for (Group group : groups) {
+			group.setRunnerSum(group.getUsers().size());
+			group.setActive(false);
+			if(user.isPresent()) {
+				for (Group temp : user.get().getGroups()) {
+					if (temp.getGid() == group.getGid()) {
+						group.setActive(true);
+						break;
+					}
+				}
+			}
+		}
+		return groups;
 	}
 }

@@ -9,6 +9,7 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_setting.*
@@ -29,7 +30,6 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
         var editor: SharedPreferences.Editor = settings.edit()
 
-
         settingMenu.setOnNavigationItemSelectedListener(this)
         settingMenu.selectedItemId = R.id.setting
 
@@ -42,11 +42,16 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         genderVal.text=settings.getString("gender","여성")
         email.text=settings.getString("email","dudaduada")
         name.text=settings.getString("name","옹붐바바")
-        heightVal.text=settings.getInt("height",181).toString()
-        weightVal.text=settings.getInt("weight",70).toString()
+        heightVal.text=settings.getString("height","181 cm")
+        weightVal.text=settings.getString("weight","70 kg")
         ProfileImage.background = ShapeDrawable(OvalShape())
         ProfileImage.clipToOutline = true
         ProfileImage.requestLayout()
+
+        ProfileImage.setOnClickListener {
+            var tmp = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            ProfileImage.setImageURI(tmp)
+        }
 
         ProfileGender.setOnClickListener {
             var d=Dialog(this)
@@ -81,6 +86,7 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
             var hp:NumberPicker=d.heightPicker
             hp.maxValue=270
             hp.minValue=100
+            Log.d("hereHW",heightVal.text.toString())
             hp.value=heightVal.text.toString().substring(0,(heightVal.text.toString().length)-3).toInt()
             var heights= Array<String>(171,{""})
             for (i in 100..270){
@@ -108,6 +114,7 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
             var wp:NumberPicker=d.weightPicker
             wp.maxValue=200
             wp.minValue=20
+            Log.d("hereW",weightVal.text.toString())
             wp.value=weightVal.text.toString().substring(0,(weightVal.text.toString().length)-3).toInt()
             var weights= Array<String>(181,{""})
             for (i in 20..200){

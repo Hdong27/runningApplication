@@ -1,9 +1,12 @@
 package com.example.runningapplication
 
+import android.app.Dialog
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.util.AttributeSet
@@ -17,8 +20,11 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.runningapplication.data.model.User
 import com.example.runningapplication.service.RunningService
+import kotlinx.android.synthetic.main.fragment_main_record.*
 import kotlinx.android.synthetic.main.fragment_main_record.view.*
 import kotlinx.android.synthetic.main.item_record.view.*
+import kotlinx.android.synthetic.main.item_record.view.mapImage
+import kotlinx.android.synthetic.main.record_detail.view.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -75,33 +81,54 @@ class MainRecordFragment : Fragment() {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if(response.code()==200){
                     var user: User? = response.body()
-                    Log.d("제발", user?.runningData.toString())
-                    Toast.makeText(activity, "성공하였습니다.", Toast.LENGTH_SHORT).show()
+                    var sumkm = 0.0
+                    var cnt = 0
+
                     for(running in user!!.runningData!!.iterator()) {
                         var recorditem=inflater.inflate(R.layout.item_record,null)
-                        recorditem.today.text=running.rid.toString()
                         recorditem.day.text=running.endtime.toString()
                         recorditem.distance.text= running.distance.toString()
+                        sumkm += running.distance!!.toFloat()
+                        cnt ++
+
+
                         var ttmp = running.image
                         val bImage: ByteArray = Base64.decode(ttmp, 0)
                         val bais = ByteArrayInputStream(bImage)
                         val bm: Bitmap? = BitmapFactory.decodeStream(bais)
                         recorditem.mapImage.setImageBitmap(bm)
                         recorditem.setOnClickListener {
-
+                            var d= Dialog(requireContext())
+                            var dd=layoutInflater.inflate(R.layout.record_detail,null)
+                            dd.mapImage.setImageBitmap(bm)
+                            val displayRectangle = Rect()
+                            activity!!.window.decorView.getWindowVisibleDisplayFrame(displayRectangle)
+                            val iconsize = (displayRectangle.width()*0.05f).toInt()
+                            val mapsize = (displayRectangle.width()*0.75f).toInt()
+                            dd.mapImage.layoutParams.height=mapsize
+                            dd.mapImage.layoutParams.width=mapsize
+                            dd.closeMap.layoutParams.height=iconsize
+                            dd.closeMap.layoutParams.width=iconsize
+                            dd.closeMap.setOnClickListener {
+                                d.dismiss()
+                            }
+                            d.setContentView(dd)
+                            d.window!!.setBackgroundDrawable(ColorDrawable(android.graphics.Color.TRANSPARENT))
+                            d.show()
                         }
 
                         recordlist.recordList.addView(recorditem)
-                        Log.d("test12314", running.toString())
                     }
 
+                    sumdistance.setText(sumkm.toString())
+                    count.setText(cnt.toString())
+                    divide.setText((sumkm/cnt).toString())
                 }else{
                 }
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
                 Log.d("hi","hi")
-                Toast.makeText(activity, "로그인 실패", Toast.LENGTH_SHORT).show()
             }
         })
 

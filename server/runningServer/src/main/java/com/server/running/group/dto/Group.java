@@ -41,10 +41,28 @@ public class Group {
 	@Column
 	private String name;
 	
+	// 챌린지 내용
+	@Column
+	private String content;
+	
+	// 목표 거리
+	@Column
+	private double distance;
+	
+	// 운동 기간
+	@Column
+	private String period;
+	
+	// 참여자 수
+	private Integer runnerSum;
+	
+	// 해당 유저 참여 여부
+	private boolean active;
+	
 	// 그룹의 플랜 리스트
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinColumn(name="groupId")
-	private List<GroupPlan> groupPlans;
+//	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+//	@JoinColumn(name="groupId")
+//	private List<GroupPlan> groupPlans;
 	
 	// 그룹의 유저 리스트
 	@JsonIgnoreProperties("groups")

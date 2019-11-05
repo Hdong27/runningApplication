@@ -201,6 +201,7 @@ class RunningActivity : AppCompatActivity() ,
             reset_btn.setTextColor(resources.getColor(R.color.White))
             start_btn.visibility = View.GONE
             pause_btn.visibility = View.VISIBLE
+            reset_btn.isEnabled = true
 
             // server 통신
 
@@ -212,7 +213,7 @@ class RunningActivity : AppCompatActivity() ,
                 override fun onResponse(call: Call<Running>, response: Response<Running>) {
                     running1 = response.body()!!
                     Log.d("running123", running1.toString())
-                    Toast.makeText(applicationContext, "기록이 저장되었습니다.", Toast.LENGTH_SHORT)
+                    Toast.makeText(applicationContext, "기록 측정이 시작되었습니다.", Toast.LENGTH_SHORT)
                         .show()
 
                 }
@@ -226,6 +227,8 @@ class RunningActivity : AppCompatActivity() ,
 
         // 일시정지 후 재시작 버튼
         restart_btn.setOnClickListener {
+            chronometer2.base = SystemClock.elapsedRealtime() + stoptime
+            chronometer2.start()
             flag = 2
             Toast.makeText(this.applicationContext, "재시작", Toast.LENGTH_SHORT).show()
 
@@ -272,8 +275,10 @@ class RunningActivity : AppCompatActivity() ,
 
             start_btn.visibility = View.VISIBLE
             pause_btn.visibility = View.GONE
+            restart_btn.visibility = View.GONE
             reset_btn.setBackgroundResource(R.color.White)
             reset_btn.setTextColor(resources.getColor(R.color.Black))
+            reset_btn.isEnabled = false
 
         }
         // 버튼 스톱워치

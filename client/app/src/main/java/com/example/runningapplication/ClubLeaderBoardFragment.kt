@@ -1,26 +1,38 @@
 package com.example.runningapplication
 
 import android.content.Context
+import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.util.Base64
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.example.runningapplication.data.model.LeaderUser
+import com.example.runningapplication.data.model.User
+import com.example.runningapplication.service.RunningService
+import com.example.runningapplication.service.UserService
+import kotlinx.android.synthetic.main.fragment_main_record.view.*
+import kotlinx.android.synthetic.main.item_record.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayInputStream
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Activities that contain this fragment must implement the
- * [ClubLeaderBoardFragment.OnFragmentInteractionListener] interface
- * to handle interaction events.
- * Use the [ClubLeaderBoardFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
+
 class ClubLeaderBoardFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -40,6 +52,48 @@ class ClubLeaderBoardFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
+        // TODO 여기다가 작업 해야댐
+
+        var settings: SharedPreferences = activity!!.getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
+
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://70.12.247.54:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        var server = retrofit.create(UserService::class.java)
+
+//        var recordlist=inflater.inflate(R.layout.fragment_main_record, container, false)
+        Log.d("checkuid", settings.getInt("uid", 0).toString())
+        server.selectMyFriends(settings.getInt("uid", 0)).enqueue(object : Callback<List<LeaderUser>> {
+            override fun onResponse(call: Call<List<LeaderUser>>, response: Response<List<LeaderUser>>) {
+                if(response.code()==200){
+                    var users: List<LeaderUser>? = response.body()
+                    Log.d("제발", users?.toString())
+                    Toast.makeText(activity, "성공하였습니다.", Toast.LENGTH_SHORT).show()
+                    for(data in users!!.iterator()) {
+                        Log.d("email", data.userEmail.toString())
+                        Log.d("email", data.userName.toString())
+                        Log.d("email", data.wholeDistance.toString())
+
+                    }
+
+                }else{
+                }
+            }
+
+            override fun onFailure(call: Call<List<LeaderUser>>, t: Throwable) {
+                Log.d("hi","hi")
+                Toast.makeText(activity, "로그인 실패", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+
+
+
+
+
         return inflater.inflate(R.layout.fragment_club_leader_board, container, false)
     }
 
