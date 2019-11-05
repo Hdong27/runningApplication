@@ -17,8 +17,11 @@ import com.example.runningapplication.data.model.LeaderUser
 import com.example.runningapplication.data.model.User
 import com.example.runningapplication.service.RunningService
 import com.example.runningapplication.service.UserService
+import kotlinx.android.synthetic.main.fragment_club_leader_board.view.*
 import kotlinx.android.synthetic.main.fragment_main_record.view.*
+import kotlinx.android.synthetic.main.item_board.view.*
 import kotlinx.android.synthetic.main.item_record.view.*
+import org.jetbrains.anko.textColor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,6 +58,8 @@ class ClubLeaderBoardFragment : Fragment() {
 
         // TODO 여기다가 작업 해야댐
 
+
+
         var settings: SharedPreferences = activity!!.getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
 
         var retrofit = Retrofit.Builder()
@@ -63,6 +68,7 @@ class ClubLeaderBoardFragment : Fragment() {
             .build()
 
         var server = retrofit.create(UserService::class.java)
+        var BF=inflater.inflate(R.layout.fragment_club_leader_board, container, false)
 
 //        var recordlist=inflater.inflate(R.layout.fragment_main_record, container, false)
         Log.d("checkuid", settings.getInt("uid", 0).toString())
@@ -72,13 +78,19 @@ class ClubLeaderBoardFragment : Fragment() {
                     var users: List<LeaderUser>? = response.body()
                     Log.d("제발", users?.toString())
                     Toast.makeText(activity, "성공하였습니다.", Toast.LENGTH_SHORT).show()
+                    var rank=0
                     for(data in users!!.iterator()) {
                         Log.d("email", data.userEmail.toString())
                         Log.d("email", data.userName.toString())
                         Log.d("email", data.wholeDistance.toString())
-
+                        var boardItem=inflater.inflate(R.layout.item_board,null)
+                        boardItem.ranking.text=(++rank).toString()
+                        if(rank==1)boardItem.first.visibility = View.VISIBLE
+                        if(data.userEmail.equals(settings.getString("email","zzzz")))boardItem.ranking.textColor=android.graphics.Color.BLUE
+                        boardItem.leaderName.text=data.userName.toString()
+                        boardItem.leaerDistance.text=data.wholeDistance.toString()
+                        BF.rankList.addView(boardItem)
                     }
-
                 }else{
                 }
             }
@@ -94,7 +106,7 @@ class ClubLeaderBoardFragment : Fragment() {
 
 
 
-        return inflater.inflate(R.layout.fragment_club_leader_board, container, false)
+        return BF
     }
 
     // TODO: Rename method, update argument and hook method into UI event
