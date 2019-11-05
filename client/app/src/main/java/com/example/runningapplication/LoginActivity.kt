@@ -42,6 +42,7 @@ class LoginActivity : AppCompatActivity() {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==200){
                         if(response.body()?.uid.equals("0")) {
+                            Toast.makeText(applicationContext, "아이디나 비밀번호가 다릅니다.", Toast.LENGTH_SHORT).show()
                         } else {
                             var user:User? = response.body()
 
