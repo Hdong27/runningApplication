@@ -20,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.runningapplication.data.model.User
 import com.example.runningapplication.service.RunningService
+import kotlinx.android.synthetic.main.fragment_main_level.*
 import kotlinx.android.synthetic.main.fragment_main_record.*
 import kotlinx.android.synthetic.main.fragment_main_record.view.*
 import kotlinx.android.synthetic.main.item_record.view.*
@@ -31,6 +32,8 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayInputStream
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 import java.util.jar.Attributes
 
 // TODO: Rename parameter arguments, choose names that match
@@ -85,9 +88,16 @@ class MainRecordFragment : Fragment() {
                     var cnt = 0
 
                     for(running in user!!.runningData!!.iterator()) {
+                        var ed=LocalDateTime.parse(running!!.endtime.toString())
+                        var sd=LocalDateTime.parse(running!!.starttime.toString())
+                        var hour = ChronoUnit.HOURS.between(sd,ed)
+                        var minutes = ChronoUnit.MINUTES.between(sd,ed)
+                        var seconds = ChronoUnit.SECONDS.between(sd,ed)
+
                         var recorditem=inflater.inflate(R.layout.item_record,null)
-                        recorditem.day.text=running.endtime.toString()
+                        recorditem.day.text=LocalDateTime.parse(running!!.endtime.toString()).toLocalDate().toString()
                         recorditem.distance.text= running.distance.toString()
+                        recorditem.time.text=(if(hour<10) "0"+hour.toString() else hour.toString())+":"+ (if(minutes<10) "0"+minutes.toString() else minutes.toString()) + ":" +(if(seconds<10) "0"+seconds.toString() else seconds.toString())
                         sumkm += running.distance!!.toFloat()
                         cnt ++
 
@@ -120,9 +130,9 @@ class MainRecordFragment : Fragment() {
                         recordlist.recordList.addView(recorditem)
                     }
 
-                    sumdistance.setText(sumkm.toString())
+                    sumdistance.setText("%.2f".format(sumkm))
                     count.setText(cnt.toString())
-                    divide.setText((sumkm/cnt).toString())
+                    divide.setText("%.2f".format(sumkm/cnt))
                 }else{
                 }
             }

@@ -134,11 +134,6 @@
                 android:layout_height="349dp"
                 tools:context=".MapsFragment" />
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/common_google_signin_btn_icon_light_normal_background" />
 
         </LinearLayout>
 

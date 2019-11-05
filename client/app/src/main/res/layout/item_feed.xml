@@ -87,19 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
                     android:text="km" />
-                <!-- 평균페이스 -->
-                <TextView
-                    android:id="@+id/feedAvg"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="10' 40" />
 
-                <TextView
-                    android:id="@+id/km2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:text="/km" />
                 <!-- 시간 -->
                 <TextView
                     android:id="@+id/feedTime"
