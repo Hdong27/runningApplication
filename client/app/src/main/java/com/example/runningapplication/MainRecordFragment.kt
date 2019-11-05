@@ -132,7 +132,11 @@ class MainRecordFragment : Fragment() {
 
                     sumdistance.setText("%.2f".format(sumkm))
                     count.setText(cnt.toString())
-                    divide.setText("%.2f".format(sumkm/cnt))
+                    if(cnt == 0) {
+                        divide.setText("0.0")
+                    } else {
+                        divide.setText("%.2f".format(sumkm/cnt))
+                    }
                 }else{
                 }
             }
