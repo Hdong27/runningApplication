@@ -133,7 +133,7 @@ class RunningActivity : AppCompatActivity() ,
         parameters.put("userId",running1!!.userId!!)
         parameters.put("rid",running1!!.rid!!)
         parameters.put("starttime", running1!!.starttime!!)
-        parameters.put("distance", totalDir.text.toString().toDouble())
+        parameters.put("distance", dir)
         parameters.put("image", ret)
 
         server.endRunning(parameters).enqueue(object : Callback<Running> {
@@ -183,6 +183,7 @@ class RunningActivity : AppCompatActivity() ,
 
         // 버튼 스톱워치
         start_btn.setOnClickListener {
+            dir = 0.0
             polyLineOptions = PolylineOptions().width(5f).color(Color.RED)
             chronometer2.base = SystemClock.elapsedRealtime() + stoptime
             chronometer2.start()
