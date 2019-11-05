@@ -96,7 +96,7 @@ class MainRecordFragment : Fragment() {
 
                         var recorditem=inflater.inflate(R.layout.item_record,null)
                         recorditem.day.text=LocalDateTime.parse(running!!.endtime.toString()).toLocalDate().toString()
-                        recorditem.distance.text= running.distance.toString()
+                        recorditem.distance.text= "%.2f".format(running.distance)
                         recorditem.time.text=(if(hour<10) "0"+hour.toString() else hour.toString())+":"+ (if(minutes<10) "0"+minutes.toString() else minutes.toString()) + ":" +(if(seconds<10) "0"+seconds.toString() else seconds.toString())
                         sumkm += running.distance!!.toFloat()
                         cnt ++

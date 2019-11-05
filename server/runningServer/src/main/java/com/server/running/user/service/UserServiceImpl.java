@@ -180,6 +180,7 @@ public class UserServiceImpl implements UserService {
 		if(maybeUser.isPresent()) {
 			User user = maybeUser.get();
 			for (Running running : user.getRunningData()) {
+				if(running.getDistance() == null) continue;
 				dir += running.getDistance();
 			}
 		}
