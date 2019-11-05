@@ -11,4 +11,5 @@ public interface RunningService {
 	
 	// 러닝 종료
 	public Running end(Running running);
+
 }

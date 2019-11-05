@@ -37,6 +37,8 @@ class ClubActivity : AppCompatActivity() ,
         tabLayout!!.getTabAt(0)!!.setText("리더보드")
         tabLayout!!.getTabAt(1)!!.setText("챌린지")
         tabLayout!!.getTabAt(2)!!.setText("이벤트")
+
+        
     }
 
     private fun setupViewPager(viewPager: ViewPager){

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Running Application</string>
+    <string name="app_name">달려라한이</string>
     <string name="title_activity_login">Sign in</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -16,6 +16,7 @@
     <string name="title_club">클럽</string>
     <string name="title_activity">활동</string>
     <string name="title_record">기록</string>
+    <string name="serverUrl"></string>
 
     <!-- google map API_KEY -->
     <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDEgFT9kIYQK84w0rDJHgP93ESBqiHiEj4</string>

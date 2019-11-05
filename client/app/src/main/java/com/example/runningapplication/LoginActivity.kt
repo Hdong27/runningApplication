@@ -45,10 +45,18 @@ class LoginActivity : AppCompatActivity() {
                         if(response.body()?.uid.equals("0")) {
                         } else {
                             var user:User? = response.body()
+
                             Log.d("user",user?.email.toString())
                             Log.d("user",user?.password.toString())
+                            editor.putInt("uid", user?.uid!!.toInt())
                             editor.putBoolean("AutoLogin",true)
+                            editor.putString("name",user?.name.toString())
                             editor.putString("email",user?.email.toString())
+                            editor.putString("password",user?.password.toString())
+                            editor.putString("gender",user?.gender.toString())
+                            editor.putString("height",user?.height!!.toString())
+                            editor.putString("weight",user?.weight!!.toString())
+                            editor.putString("img",user?.img.toString())
                             editor.commit()
                             Toast.makeText(applicationContext, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                             startActivity(loginIntent)
