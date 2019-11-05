@@ -38,4 +38,9 @@ interface UserService {
     fun friendAdd(
         @Body param: HashMap<String, Any>
     ):Call<Boolean>
+
+    @POST("/joinTeam.run")
+    fun joinTeam(
+        @Body param: HashMap<String, Any>
+    ):Call<Boolean>
 }

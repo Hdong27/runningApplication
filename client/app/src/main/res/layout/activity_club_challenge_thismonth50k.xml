@@ -45,14 +45,15 @@
                     android:paddingLeft="30dp"
                     android:text="14시간 33분 남음"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:visibility="invisible" />
 
                 <TextView
+                    android:id="@+id/cname"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="3"
                     android:paddingLeft="30dp"
-                    android:text="10월 50K 챌린지"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -90,12 +91,12 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/distance"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:paddingRight="30dp"
-                    android:text="50km"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -115,12 +116,12 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/period"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:paddingRight="30dp"
-                    android:text="10월 1일 - 10월 31일"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -140,12 +141,12 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:id="@+id/participants"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="right|center_vertical"
                     android:paddingRight="30dp"
-                    android:text="159,566명의 러너"
                     android:textSize="18sp" />
             </LinearLayout>
 
@@ -215,12 +216,13 @@
     </ScrollView>
 
     <Button
+        android:id="@+id/join_btn"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="#ED7D31"
-        app:cornerRadius="10dp"
         android:text="챌린지 참여하기"
         android:textColor="#FFFFFF"
-        android:textSize="20dp" />
+        android:textSize="20dp"
+        app:cornerRadius="10dp" />
 </RelativeLayout>
