@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.server.running.group.dto.Group;
+import com.server.running.group.dto.Join;
 import com.server.running.group.dto.UserGroup;
 import com.server.running.group.repository.GroupRepository;
 import com.server.running.user.dto.User;
@@ -43,9 +44,10 @@ public class GroupServiceImpl implements GroupService {
 	
 	// 그룹에 참가
 	@Override
-	public Boolean joinTeam(UserGroup userGroup) {
-		Optional<Group> maybeGroup = groupRepository.findById(userGroup.getGroup().getGid());
-		maybeGroup.get().addUsers(userGroup.getUser());
+	public Boolean joinTeam(Join join) {
+		Optional<Group> maybeGroup = groupRepository.findById(join.getGid());
+		Optional<User> maybeUser = userRepository.findById(join.getUid());
+		maybeGroup.get().addUsers(maybeUser.get());
 		groupRepository.save(maybeGroup.get());
 		return true;
 	}

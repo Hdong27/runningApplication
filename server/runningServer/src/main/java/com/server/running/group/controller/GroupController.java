@@ -2,8 +2,6 @@ package com.server.running.group.controller;
 
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.server.running.group.dto.Group;
+import com.server.running.group.dto.Join;
 import com.server.running.group.dto.UserGroup;
 import com.server.running.group.service.GroupService;
 
@@ -50,9 +49,9 @@ public class GroupController {
 	
 	// 그룹에 참가
 	@PostMapping("/joinTeam.run")
-	public ResponseEntity<Boolean> joinTeam(@RequestBody UserGroup userGroup) {
+	public ResponseEntity<Boolean> joinTeam(@RequestBody Join join){
 		log.debug("그룹 참가 요청");
-		return new ResponseEntity<Boolean>(groupService.joinTeam(userGroup), HttpStatus.OK);
+		return new ResponseEntity<Boolean>(groupService.joinTeam(join), HttpStatus.OK);
 	}
 	
 	// 그룹 탈퇴
