@@ -41,7 +41,6 @@ class MainActivity : AppCompatActivity(),
         mainMenu.selectedItemId = R.id.main
 
 
-
         viewPager=mainViewPager as ViewPager
         setupViewPager(viewPager!!)
         tabLayout = mainTabs as TabLayout

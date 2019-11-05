@@ -1,14 +1,29 @@
 package com.example.runningapplication
 
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
+import com.example.runningapplication.data.model.User
+import com.example.runningapplication.service.RunningService
+import com.example.runningapplication.service.UserService
 import kotlinx.android.synthetic.main.activity_main.view.*
+import kotlinx.android.synthetic.main.fragment_main_level.*
 import kotlinx.android.synthetic.main.fragment_main_level.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -41,16 +56,73 @@ class MainLevelFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         var myView :View = inflater.inflate(R.layout.fragment_main_level, container, false)
         var list : ArrayList<String> = ArrayList()
 
         if(!list.contains("ok"))myView.level_volt.alpha=0.5f
+        if(!list.contains("ok"))myView.level_yellow.alpha=0.5f
         if(!list.contains("ok"))myView.level_orange.alpha=0.5f
         if(!list.contains("ok"))myView.level_black.alpha=0.5f
         if(!list.contains("ok"))myView.level_blue.alpha=0.5f
         if(!list.contains("ok"))myView.level_green.alpha=0.5f
         if(!list.contains("ok"))myView.level_purple.alpha=0.5f
+
+
+        var settings: SharedPreferences = activity!!.getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
+
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://70.12.247.54:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        var server = retrofit.create(RunningService::class.java)
+        server.distance(settings.getInt("uid", 0)).enqueue(object : Callback<Double> {
+            override fun onResponse(call: Call<Double>, response: Response<Double>) {
+                if(response.code()==200){
+                    var distance:Double = 0.0
+                    distance = response.body()!!
+                    leftdistance.text = distance.toString()
+                    if(distance <= 50) {
+//                        val drawable : Drawable? =
+                        level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_yellow, null))
+                        myView.level_yellow.alpha = 1.0f
+
+                    } else if (distance <=250) {
+                        level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_orange, null))
+                        myView.level_orange.alpha = 1.0f
+
+                    } else if (distance <=1000) {
+                        level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_green, null))
+                        myView.level_green.alpha = 1.0f
+
+                    } else if (distance <=2500) {
+                        level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_blue, null))
+                        myView.level_blue.alpha = 1.0f
+
+                    } else if (distance <=5000) {
+                        level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_purple, null))
+                        myView.level_purple.alpha = 1.0f
+
+                    } else if (distance <=15000) {
+                        level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_black, null))
+                        myView.level_black.alpha = 1.0f
+
+                    } else {
+                        level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_volt, null))
+                        myView.level_volt.alpha = 1.0f
+                    }
+
+                }else{
+                }
+            }
+
+            override fun onFailure(call: Call<Double>, t: Throwable) {
+                Log.d("hi","hi")
+            }
+        })
+
+        // Inflate the layout for this fragment
+
 
         return myView
     }

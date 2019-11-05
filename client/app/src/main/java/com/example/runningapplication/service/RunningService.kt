@@ -22,4 +22,9 @@ interface RunningService {
     fun findRunning(
         @Query("uid") uid: Int
     ):Call<User>
+
+    @GET("/distance.run")
+    fun distance(
+        @Query("uid") uid: Int
+    ):Call<Double>
 }

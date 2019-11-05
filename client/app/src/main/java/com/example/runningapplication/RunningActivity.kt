@@ -93,15 +93,11 @@ class RunningActivity : AppCompatActivity() ,
                 mMap.addPolyline(polyLineOptions)
 
                 if(flag == 1) { // 시작 전, 정지 버튼 클릭시
-                    Toast.makeText(applicationContext, latLng.toString(), Toast.LENGTH_SHORT).show()
+
                 } else if(flag == 2) {  // 시작 버튼 클릭시
                     if(polyLineOptions.points.size > 1) {
                         dir += computeDistanceBetween(polyLineOptions.points[polyLineOptions.points.size - 2], polyLineOptions.points[polyLineOptions.points.size - 1])
-                        Toast.makeText(
-                            applicationContext,
-                            polyLineOptions.points[polyLineOptions.points.size - 1].toString(),
-                            Toast.LENGTH_SHORT
-                        ).show()
+
                     }
                     totalDir.setText(String.format("%.2f", dir))
                     var time : CharSequence = chronometer2.text
@@ -111,7 +107,6 @@ class RunningActivity : AppCompatActivity() ,
                     // Toast.makeText(applicationContext, polyLineOptions.points[polyLineOptions.points.size-1].toString(), Toast.LENGTH_LONG).show()
                 } else {  // 일시정지 버튼 클릭시
                     if(polyLineOptions.points.size > 0) {
-                        Toast.makeText(applicationContext, polyLineOptions.points[polyLineOptions.points.size-1].toString(), Toast.LENGTH_LONG).show()
                     }
                 }
 
@@ -145,7 +140,6 @@ class RunningActivity : AppCompatActivity() ,
         server.endRunning(parameters).enqueue(object : Callback<Running> {
             override fun onResponse(call: Call<Running>, response: Response<Running>) {
                 running1 = response.body()!!
-                Log.d("running1234", running1.toString())
                 Toast.makeText(applicationContext, "기록이 저장되었습니다.", Toast.LENGTH_SHORT)
                     .show()
 
@@ -207,13 +201,11 @@ class RunningActivity : AppCompatActivity() ,
             // server 통신
 
             var parameters = HashMap<String,Int>()
-            Log.d("useridid", settings.getInt("uid", 0).toString())
             parameters.put("userId",settings.getInt("uid", 0))
 
             server.startRunning(parameters).enqueue(object : Callback<Running> {
                 override fun onResponse(call: Call<Running>, response: Response<Running>) {
                     running1 = response.body()!!
-                    Log.d("running123", running1.toString())
                     Toast.makeText(applicationContext, "기록 측정이 시작되었습니다.", Toast.LENGTH_SHORT)
                         .show()
 
