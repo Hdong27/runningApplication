@@ -2,6 +2,7 @@ package com.example.runningapplication
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -31,7 +32,7 @@ class SignUpActivity : AppCompatActivity() {
             .build()
 
         var server = retrofit.create(UserService::class.java)
-        val runningIntent = Intent(this, RunningActivity::class.java)
+        val landingIntent = Intent(this, LandingActivity::class.java)
         pwdChk.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
 
@@ -82,12 +83,12 @@ class SignUpActivity : AppCompatActivity() {
             parameters.put("weight", this.weight.text.toString()+" kg")
             parameters.put("email",this.email.text.toString())
             parameters.put("password",this.pwd.text.toString())
-            parameters.put("gender",findViewById<RadioButton>(this.gender.checkedRadioButtonId).text.toString())
+            parameters.put("gender",(findViewById<RadioButton>(this.gender.checkedRadioButtonId)).text.toString())
             Log.d("",parameters.toString())
             server.signUp(parameters).enqueue(object : Callback<Boolean>{
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                     if(response.body()==true){
-                        startActivity(runningIntent)
+                        startActivity(landingIntent)
                     }else{
                         Toast.makeText(applicationContext, "가입 실패", Toast.LENGTH_SHORT).show()
                     }

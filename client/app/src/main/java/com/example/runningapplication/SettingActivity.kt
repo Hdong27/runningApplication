@@ -30,7 +30,6 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
         var editor: SharedPreferences.Editor = settings.edit()
 
-
         settingMenu.setOnNavigationItemSelectedListener(this)
         settingMenu.selectedItemId = R.id.setting
 
@@ -43,8 +42,8 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         genderVal.text=settings.getString("gender","여성")
         email.text=settings.getString("email","dudaduada")
         name.text=settings.getString("name","옹붐바바")
-        heightVal.text=settings.getInt("height",181).toString()
-        weightVal.text=settings.getInt("weight",70).toString()
+        heightVal.text=settings.getString("height","181 cm")
+        weightVal.text=settings.getString("weight","70 kg")
         ProfileImage.background = ShapeDrawable(OvalShape())
         ProfileImage.clipToOutline = true
         ProfileImage.requestLayout()
