@@ -18,6 +18,7 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="150dp"
+                android:id="@+id/level_image"
                 android:src="@drawable/level_yellow"/>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -28,6 +29,7 @@
                     android:layout_margin="5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:id="@+id/leftdistance"
                     android:text="49.43 km"/>
                 <TextView
                     android:layout_margin="5dp"

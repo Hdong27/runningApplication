@@ -20,6 +20,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.example.runningapplication.data.model.User
 import com.example.runningapplication.service.RunningService
+import kotlinx.android.synthetic.main.fragment_main_record.*
 import kotlinx.android.synthetic.main.fragment_main_record.view.*
 import kotlinx.android.synthetic.main.item_record.view.*
 import kotlinx.android.synthetic.main.item_record.view.mapImage
@@ -80,12 +81,17 @@ class MainRecordFragment : Fragment() {
             override fun onResponse(call: Call<User>, response: Response<User>) {
                 if(response.code()==200){
                     var user: User? = response.body()
-                    Log.d("제발", user?.runningData.toString())
-                    Toast.makeText(activity, "성공하였습니다.", Toast.LENGTH_SHORT).show()
+                    var sumkm = 0.0
+                    var cnt = 0
+
                     for(running in user!!.runningData!!.iterator()) {
                         var recorditem=inflater.inflate(R.layout.item_record,null)
                         recorditem.day.text=running.endtime.toString()
                         recorditem.distance.text= running.distance.toString()
+                        sumkm += running.distance!!.toFloat()
+                        cnt ++
+
+
                         var ttmp = running.image
                         val bImage: ByteArray = Base64.decode(ttmp, 0)
                         val bais = ByteArrayInputStream(bImage)
@@ -112,16 +118,17 @@ class MainRecordFragment : Fragment() {
                         }
 
                         recordlist.recordList.addView(recorditem)
-                        Log.d("test12314", running.toString())
                     }
 
+                    sumdistance.setText(sumkm.toString())
+                    count.setText(cnt.toString())
+                    divide.setText((sumkm/cnt).toString())
                 }else{
                 }
             }
 
             override fun onFailure(call: Call<User>, t: Throwable) {
                 Log.d("hi","hi")
-                Toast.makeText(activity, "로그인 실패", Toast.LENGTH_SHORT).show()
             }
         })
 
