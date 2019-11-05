@@ -36,9 +36,9 @@ interface UserService {
         @Query("email") email: String
     ):Call<List<String>>
 
-    @POST("/friendAdd.run")
-    fun friendAdd(
-        @Body param: HashMap<String, Any>
+    @POST("/addFriend.run")
+    fun addFriend(
+        @Body parammeters: HashMap<String, Any>
     ):Call<Boolean>
 
     @GET("/selectMyFriends.run")

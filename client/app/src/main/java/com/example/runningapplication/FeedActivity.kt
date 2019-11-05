@@ -122,14 +122,15 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
                                 friendItem = layoutInflater.inflate(R.layout.item_friend,null)
                                 friendItem.friendEmail.text=s
                                 friendItem.addFriend.setOnClickListener {
-                                    var param : HashMap<String,Any> = HashMap()
-                                    param.put("email",s)
-                                    server.friendAdd(param).enqueue(object : Callback<Boolean>{
+                                    var parameters : HashMap<String,Any> = HashMap()
+                                    parameters.put("user",settings.getString("email","hi").toString())
+                                    parameters.put("email",s)
+                                    server.addFriend(parameters).enqueue(object : Callback<Boolean>{
                                         override fun onResponse(
                                             call: Call<Boolean>,
                                             response: Response<Boolean>
                                         ) {
-                                            Toast.makeText(applicationContext,"친구 추가가 완료되었습니다.",Toast.LENGTH_SHORT).show()
+                                            Toast.makeText(applicationContext,response.body().toString(),Toast.LENGTH_LONG).show()
                                             d.dismiss()
                                         }
 
