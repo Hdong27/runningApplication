@@ -4,10 +4,12 @@ import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 
 import android.graphics.Rect
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 
 import android.util.Log
 import android.view.MenuItem
@@ -21,6 +23,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_feed.*
 
 import kotlinx.android.synthetic.main.frienddialog.view.*
+import kotlinx.android.synthetic.main.item_feed.view.*
 
 import kotlinx.android.synthetic.main.item_friend.view.*
 
@@ -29,6 +32,14 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayInputStream
+import java.text.SimpleDateFormat
+import java.time.Duration
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItemSelectedListener {
@@ -45,20 +56,37 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
 
         var server = retrofit.create(UserService::class.java)
         Log.d("asdfasdfsadfgg111", settings.getInt("uid", 0).toString())
-
+        var inflater = layoutInflater
         server.findMyFriends(settings.getInt("uid", 0)).enqueue(object : Callback<List<FriendsRecord>> {
             override fun onResponse(call: Call<List<FriendsRecord>>, response: Response<List<FriendsRecord>>) {
                 if(response.code()==200){
                     var records: List<FriendsRecord>? = response.body()
 
-                    Toast.makeText(applicationContext, "성공하였습니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(applicationContext, records!!.size.toString(), Toast.LENGTH_LONG).show()
                     for(record in records!!.iterator()) {
                         Log.d("saasgasfsa", record.userName.toString())
                         Log.d("saasgasfsa", record.userEmail.toString())
+                        Log.d("saasgasfsa", record.running!!.endtime.toString())
                         Log.d("saasgasfsa", record.running!!.image.toString())
+                        Log.d("saasgasfsa", record.running!!.starttime.toString())
+                        var ed=LocalDateTime.parse(record.running!!.endtime.toString())
+                        var sd=LocalDateTime.parse(record.running!!.starttime.toString())
 
+                        var hour = ChronoUnit.HOURS.between(sd,ed)
+                        var minutes = ChronoUnit.MINUTES.between(sd,ed)
+                        var seconds = ChronoUnit.SECONDS.between(sd,ed)
+
+                        var feeditem=inflater.inflate(R.layout.item_feed,null)
+                        feeditem.username.text=record.userName.toString()
+                        feeditem.feedDay.text=LocalDateTime.parse(record.running!!.endtime.toString()).toLocalDate().toString()
+                        feeditem.feedImage.setImageBitmap(
+                            BitmapFactory.decodeStream(
+                                ByteArrayInputStream(
+                                    Base64.decode(record.running!!.image.toString(), 0))))
+                        feeditem.feedDistance.text=record.running!!.distance.toString()
+                        feeditem.feedTime.text = (if(hour<10) "0"+hour.toString() else hour.toString())+":"+ (if(minutes<10) "0"+minutes.toString() else minutes.toString()) + ":" +(if(seconds<10) "0"+seconds.toString() else seconds.toString())
+                        feedList.addView(feeditem)
                     }
-
                 }else{
                 }
             }
@@ -117,7 +145,7 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
 
                     override fun onFailure(call: Call<List<String>>, t: Throwable) {
                         Log.d("hi","hi")
-                        Toast.makeText(applicationContext, "김현빈 몰래 밥먹으러감", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(applicationContext, "hhhh", Toast.LENGTH_SHORT).show()
                     }
                 })
                 if(gd.friendList.layoutParams.height<pre){
