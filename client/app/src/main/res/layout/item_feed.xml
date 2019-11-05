@@ -8,11 +8,13 @@
     android:orientation="vertical">
 
     <TextView
+        android:paddingTop="3dp"
+        android:paddingLeft="15dp"
         android:id="@+id/username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="111"
-        android:textColor="#F3F3F3"
+        android:textColor="#A2A0A0"
         android:textSize="15dp"
         android:textStyle="bold" />
     <LinearLayout
