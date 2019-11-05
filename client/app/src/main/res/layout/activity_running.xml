@@ -64,7 +64,7 @@
                         android:layout_weight="2"
                         android:textSize="20dp"
                         android:gravity="center"
-                        android:text="거리"/>
+                        android:text="0.0"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -85,7 +85,7 @@
                         android:layout_weight="2"
                         android:textSize="20dp"
                         android:gravity="center"
-                        android:text="칼로리"/>
+                        android:text="0.0kcal"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
@@ -106,7 +106,7 @@
                         android:layout_weight="2"
                         android:textSize="20dp"
                         android:gravity="center"
-                        android:text="속력"/>
+                        android:text="0m/s"/>
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
