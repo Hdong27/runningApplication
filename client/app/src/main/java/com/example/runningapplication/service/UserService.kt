@@ -50,4 +50,10 @@ interface UserService {
     fun findMyFriends(
         @Query("uid") uid: Int
     ):Call<List<FriendsRecord>>
+    
+    @POST("/joinTeam.run")
+    fun joinTeam(
+        @Body param: HashMap<String, Any>
+    ):Call<Boolean>
+
 }
