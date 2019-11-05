@@ -235,14 +235,6 @@ class ClubChallengeFragment : Fragment() {
 
 //        var view =  inflater.inflate(R.layout.fragment_club_challenge, container, false)
 
-        view.challenge_main_img.setOnClickListener {
-            val intent = Intent(activity, ClubChallengeMonthly50Activity::class.java)
-            startActivity(intent)
-//            view -> Log.d("challenge_main_img","Selected")
-        }
-
-
-
 
 //        view.first_challenge_layout.setOnClickListener {
 //            val intent = Intent(activity, ClubChallengeMonthly50Activity::class.java)

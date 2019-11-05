@@ -3,7 +3,6 @@ package com.example.runningapplication
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -11,7 +10,6 @@ import android.widget.Toast
 import com.example.runningapplication.data.model.Challenge
 import com.example.runningapplication.service.UserService
 import kotlinx.android.synthetic.main.activity_club_challenge_thismonth50k.*
-import org.jetbrains.anko.backgroundColor
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
