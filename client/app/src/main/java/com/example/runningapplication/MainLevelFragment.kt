@@ -86,30 +86,37 @@ class MainLevelFragment : Fragment() {
 //                        val drawable : Drawable? =
                         level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_yellow, null))
                         myView.level_yellow.alpha = 1.0f
+                        myView.level_text.text = "옐로우 레벨"
 
                     } else if (distance <=250) {
                         level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_orange, null))
                         myView.level_orange.alpha = 1.0f
+                        myView.level_text.text = "오렌지 레벨"
 
                     } else if (distance <=1000) {
                         level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_green, null))
                         myView.level_green.alpha = 1.0f
+                        myView.level_text.text = "그린 레벨"
 
                     } else if (distance <=2500) {
                         level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_blue, null))
                         myView.level_blue.alpha = 1.0f
+                        myView.level_text.text = "블루 레벨"
 
                     } else if (distance <=5000) {
                         level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_purple, null))
                         myView.level_purple.alpha = 1.0f
+                        myView.level_text.text = "퍼플 레벨"
 
                     } else if (distance <=15000) {
                         level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_black, null))
                         myView.level_black.alpha = 1.0f
+                        myView.level_text.text = "블랙 레벨"
 
                     } else {
                         level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_volt, null))
                         myView.level_volt.alpha = 1.0f
+                        myView.level_text.text = "볼트 레벨"
                     }
 
                 }else{
