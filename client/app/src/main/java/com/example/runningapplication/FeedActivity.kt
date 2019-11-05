@@ -82,7 +82,7 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
                             BitmapFactory.decodeStream(
                                 ByteArrayInputStream(
                                     Base64.decode(record.running!!.image.toString(), 0))))
-                        feeditem.feedDistance.text=record.running!!.distance.toString()
+                        feeditem.feedDistance.text="%.2f".format(record.running!!.distance)
                         feeditem.feedTime.text = (if(hour<10) "0"+hour.toString() else hour.toString())+":"+ (if(minutes<10) "0"+minutes.toString() else minutes.toString()) + ":" +(if(seconds<10) "0"+seconds.toString() else seconds.toString())
                         feedList.addView(feeditem)
                     }
