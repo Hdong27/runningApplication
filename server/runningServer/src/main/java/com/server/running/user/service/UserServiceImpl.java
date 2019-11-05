@@ -107,8 +107,8 @@ public class UserServiceImpl implements UserService {
 	// 친구 추가
 	@Override
 	public Boolean addFriend(Friend friend) {
-		User user = friend.getUser();
-		Optional<User> fri = userRepository.findByEmail(friend.getFemail());
+		User user = userRepository.findByEmail(friend.getUser()).get();
+		Optional<User> fri = userRepository.findByEmail(friend.getEmail());
 		user.addFriends(fri.get());
 		fri.get().addFriends(user);
 		userRepository.save(user);
@@ -140,15 +140,25 @@ public class UserServiceImpl implements UserService {
 		return list;
 	}
 
+	// 친구 랭킹
 	@Override
 	public List<TotalFriend> selectMyFriends(Integer uid) {
 		List<TotalFriend> list = new ArrayList<TotalFriend>();
 		Optional<User> maybeUser = userRepository.findById(uid);
 		if(maybeUser.isPresent()) {
 			User user = maybeUser.get();
+			TotalFriend temp = new TotalFriend();
+			double dir = 0;
+			for (Running running : user.getRunningData()) {
+				dir += running.getDistance();
+			}
+			temp.setUserEmail(user.getEmail());
+			temp.setUserName(user.getName());
+			temp.setWholeDistance(dir);
+			list.add(temp);
 			for (User friend : user.getFriends()) {
 				TotalFriend tf = new TotalFriend();
-				double dir = 0;
+				dir = 0;
 				for (Running running : friend.getRunningData()) {
 					dir += running.getDistance();
 				}

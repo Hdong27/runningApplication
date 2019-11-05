@@ -90,6 +90,7 @@ public class UserController {
 	// 이메일로 친구 추가
 	@PostMapping("/addFriend.run")
 	public ResponseEntity<Boolean> addFriend(@RequestBody Friend friend) {
+		log.debug("친구 추가");
 		return new ResponseEntity<Boolean>(userService.addFriend(friend), HttpStatus.OK);
 	}
 

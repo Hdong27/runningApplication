@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class Friend {
-	private User user;
-	private String femail;
+	private String user;
+	private String email;
 }
