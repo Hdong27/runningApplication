@@ -65,7 +65,7 @@ class ClubLeaderBoardFragment : Fragment() {
         var server = retrofit.create(UserService::class.java)
 
 //        var recordlist=inflater.inflate(R.layout.fragment_main_record, container, false)
-
+        Log.d("checkuid", settings.getInt("uid", 0).toString())
         server.selectMyFriends(settings.getInt("uid", 0)).enqueue(object : Callback<List<LeaderUser>> {
             override fun onResponse(call: Call<List<LeaderUser>>, response: Response<List<LeaderUser>>) {
                 if(response.code()==200){
