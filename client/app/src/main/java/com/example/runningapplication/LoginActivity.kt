@@ -41,7 +41,6 @@ class LoginActivity : AppCompatActivity() {
             server.login(parameters).enqueue(object : Callback<User>{
                 override fun onResponse(call: Call<User>, response: Response<User>) {
                     if(response.code()==200){
-                        Toast.makeText(applicationContext, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                         if(response.body()?.uid.equals("0")) {
                         } else {
                             var user:User? = response.body()

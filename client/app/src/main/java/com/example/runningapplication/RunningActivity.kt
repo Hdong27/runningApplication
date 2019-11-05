@@ -104,7 +104,6 @@ class RunningActivity : AppCompatActivity() ,
                     var totalTime : Int = ((time[0] - '0') * 10 + (time[1] - '0')) * 60 + ((time[3] - '0') * 10 + (time[4] - '0'))
                     totalCal.setText(String.format("%.1fkcal", totalTime * 0.55))
                     totalVec.setText(String.format("%.2fm/s", dir / totalTime))
-                    // Toast.makeText(applicationContext, polyLineOptions.points[polyLineOptions.points.size-1].toString(), Toast.LENGTH_LONG).show()
                 } else {  // 일시정지 버튼 클릭시
                     if(polyLineOptions.points.size > 0) {
                     }
