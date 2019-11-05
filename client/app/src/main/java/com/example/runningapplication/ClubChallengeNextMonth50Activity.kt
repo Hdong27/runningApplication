@@ -66,6 +66,7 @@ class ClubChallengeNextMonth50Activity : AppCompatActivity() {
                         if(response.body()!!){
                             Toast.makeText(applicationContext, "참가 성공", Toast.LENGTH_SHORT).show()
                             val intent = Intent(this@ClubChallengeNextMonth50Activity, ClubActivity::class.java)
+                            startActivity(intent)
                         }
                     }else{
                         Toast.makeText(applicationContext, "참가 실패", Toast.LENGTH_SHORT).show()

@@ -76,8 +76,6 @@ class ClubLeaderBoardFragment : Fragment() {
             override fun onResponse(call: Call<List<LeaderUser>>, response: Response<List<LeaderUser>>) {
                 if(response.code()==200){
                     var users: List<LeaderUser>? = response.body()
-                    Log.d("제발", users?.toString())
-                    Toast.makeText(activity, "성공하였습니다.", Toast.LENGTH_SHORT).show()
                     var rank=0
                     for(data in users!!.iterator()) {
                         Log.d("email", data.userEmail.toString())
@@ -88,7 +86,7 @@ class ClubLeaderBoardFragment : Fragment() {
                         if(rank==1)boardItem.first.visibility = View.VISIBLE
                         if(data.userEmail.equals(settings.getString("email","zzzz")))boardItem.ranking.textColor=android.graphics.Color.BLUE
                         boardItem.leaderName.text=data.userName.toString()
-                        boardItem.leaerDistance.text=data.wholeDistance.toString()
+                        boardItem.leaerDistance.text="%.2f".format(data.wholeDistance)
                         BF.rankList.addView(boardItem)
                     }
                 }else{

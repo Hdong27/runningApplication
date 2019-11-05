@@ -81,7 +81,7 @@ class MainLevelFragment : Fragment() {
                 if(response.code()==200){
                     var distance:Double = 0.0
                     distance = response.body()!!
-                    leftdistance.text = distance.toString()
+                    leftdistance.text = "%.2f".format(distance)
                     if(distance <= 50) {
 //                        val drawable : Drawable? =
                         level_image.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.level_yellow, null))

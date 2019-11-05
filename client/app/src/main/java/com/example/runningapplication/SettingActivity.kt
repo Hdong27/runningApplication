@@ -48,11 +48,6 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         ProfileImage.clipToOutline = true
         ProfileImage.requestLayout()
 
-        ProfileImage.setOnClickListener {
-            var tmp = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            ProfileImage.setImageURI(tmp)
-        }
-
         ProfileGender.setOnClickListener {
             var d=Dialog(this)
             var gd=layoutInflater.inflate(R.layout.genderdialog,null)
