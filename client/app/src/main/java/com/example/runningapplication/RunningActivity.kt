@@ -33,6 +33,7 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Base64
 import android.util.Log
+import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import com.example.runningapplication.data.model.Running
 import com.example.runningapplication.data.model.User
@@ -264,9 +265,22 @@ class RunningActivity : AppCompatActivity() ,
             chronometer2.stop()
 
             flag = 1
+            val builder = AlertDialog.Builder(this)
+            val dialogView = layoutInflater.inflate(R.layout.custum_dialog_view, null)
 
+            builder.setView(dialogView)
+                .setPositiveButton("확인") { dialogInterface, i ->
+                    mMap.snapshot(this)
+
+                    /* 확인일 때 main의 View의 값에 dialog View에 있는 값을 적용 */
+
+                }
+                .setNegativeButton("취소") { dialogInterface, i ->
+                    /* 취소일 때 아무 액션이 없으므로 빈칸 */
+                }
+                .show()
             // mMap.addPolyline(polyLineOptions)
-            mMap.snapshot(this)
+
 
 
 
