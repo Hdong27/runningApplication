@@ -2,13 +2,24 @@ package com.example.runningapplication
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.runningapplication.data.model.Challenge
+import com.example.runningapplication.service.UserService
 import kotlinx.android.synthetic.main.fragment_club_challenge.view.*
+import kotlinx.android.synthetic.main.wpqkf.view.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,12 +48,192 @@ class ClubChallengeFragment : Fragment() {
         }
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+//        val listview: ListView
+//        val adapter: ListViewAdapter
+
+//        adapter = ListViewAdapter()
+
+//        listview = getView()?.findViewById(R.id.LH) as ListView
+//        listview.adapter = adapter
+
+        // var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
+        // var editor: SharedPreferences.Editor = settings.edit()
+
+//        var retrofit = Retrofit.Builder()
+//            .baseUrl("http://70.12.247.54:8080")
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//
+//        var server = retrofit.create(UserService::class.java)
+//
+//        server.findTeam().enqueue(object : Callback<List<Challenge>> {
+//            override fun onResponse(call: Call<List<Challenge>>, response: Response<List<Challenge>>) {
+//                if(response.code()==200){
+//                    var challenge : List<Challenge>? = response.body()
+//                    Log.d("msg", response.body().toString())
+//                    var temp : Challenge = challenge!!.get(0)
+//                    Log.d("msg", temp.toString())
+//
+//
+//                    val inflater:LayoutInflater = LayoutInflater.from(context)
+//                    var challengeItem:View=inflater.inflate(R.layout.row,null)
+//                    challengeItem.name.text=temp.name
+//                    challengeItem.content.text=temp.content
+//
+//                    view.CL.addView(challengeItem)
+////                    view.LH.addView(challengeItem)
+////                    LH.addView(challengeItem)
+//
+////                    adapter.addItem(temp.name!!, temp.content!!, temp.runnerSum!!)
+//
+////                    distanceText = findViewById(R.id.distance) as TextView
+////                    periodText = findViewById(R.id.period) as TextView
+////                    distanceText.text = challenge?.get(0)?.distance.toString() +"km"
+////                    periodText.text = challenge?.get(1)?.period.toString()
+//                } else{
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<Challenge>>, t: Throwable) {
+//                Log.d("hi","hi")
+////                Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+//            }
+//        })
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         // Inflate the layout for this fragment
-        val view: View =  inflater.inflate(R.layout.fragment_club_challenge, container, false)
+        var view =  inflater.inflate(R.layout.fragment_club_challenge, container, false)
+        var retrofit = Retrofit.Builder()
+            .baseUrl("http://70.12.247.54:8080")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        var server = retrofit.create(UserService::class.java)
+
+        view.MC.setVisibility(View.GONE)
+        var settings: SharedPreferences = activity!!.getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
+
+        var challengeItem : View
+
+//        Log.d("test",settings.getInt("uid",0).toString())
+        server.findTeam(settings.getInt("uid", 0)).enqueue(object : Callback<List<Challenge>> {
+
+            override fun onResponse(call: Call<List<Challenge>>, response: Response<List<Challenge>>) {
+                if(response.code()==200){
+                    var challenge : List<Challenge>? = response.body()
+//                    Log.d("msg", response.body().toString())
+                    var idx=0
+                    var imgList = arrayOf(R.drawable.club_challenge15k,R.drawable.club_challenge50k,R.drawable.club_challenge100k,R.drawable.club_challenge_next50k)
+                    // 여기서 반복문 시작
+                    challenge?.forEach {
+                        var temp  : Challenge = it
+
+                        challengeItem=inflater.inflate(R.layout.wpqkf,null)
+                        if(idx == 0){
+                            challengeItem.setOnClickListener{
+                                val intent = Intent(activity, ClubChallengeWeeklyActivity::class.java)
+                                intent.putExtra("gid", temp.gid)
+                                intent.putExtra("content", temp.content)
+                                intent.putExtra("distance", temp.distance)
+                                intent.putExtra("name", temp.name)
+                                intent.putExtra("period", temp.period)
+                                intent.putExtra("runnerSum", temp.runnerSum)
+                                intent.putExtra("active", temp.active)
+
+                                startActivity(intent)
+                            }
+                        } else if(idx == 1){
+                            challengeItem.setOnClickListener{
+                                val intent = Intent(activity, ClubChallengeMonthly50Activity::class.java)
+                                intent.putExtra("gid", temp.gid)
+                                intent.putExtra("content", temp.content)
+                                intent.putExtra("distance", temp.distance)
+                                intent.putExtra("name", temp.name)
+                                intent.putExtra("period", temp.period)
+                                intent.putExtra("runnerSum", temp.runnerSum)
+                                intent.putExtra("active", temp.active)
+
+                                startActivityForResult(intent, 1)
+                            }
+                        } else if(idx == 2){
+                            challengeItem.setOnClickListener{
+                                val intent = Intent(activity, ClubChallengeMonthly100Activity::class.java)
+                                intent.putExtra("gid", temp.gid)
+                                intent.putExtra("content", temp.content)
+                                intent.putExtra("distance", temp.distance)
+                                intent.putExtra("name", temp.name)
+                                intent.putExtra("period", temp.period)
+                                intent.putExtra("runnerSum", temp.runnerSum)
+                                intent.putExtra("active", temp.active)
+
+                                startActivity(intent)
+                            }
+                        } else if(idx == 3){
+                            challengeItem.setOnClickListener{
+                                val intent = Intent(activity, ClubChallengeNextMonth50Activity::class.java)
+                                intent.putExtra("gid", temp.gid)
+                                intent.putExtra("content", temp.content)
+                                intent.putExtra("distance", temp.distance)
+                                intent.putExtra("name", temp.name)
+                                intent.putExtra("period", temp.period)
+                                intent.putExtra("runnerSum", temp.runnerSum)
+                                intent.putExtra("active", temp.active)
+
+                                startActivity(intent)
+                            }
+                        }
+
+                        challengeItem.img.setImageDrawable(resources.getDrawable(imgList.get(idx++)))
+                        challengeItem.title.text = temp.name
+                        challengeItem.content.text = temp.content
+
+                        if(temp.active){
+                            view.MC.setVisibility(View.VISIBLE)
+                            Log.d("visi",temp.active.toString())
+                            view.MC.addView(challengeItem)
+                        } else{
+                            view.CL.addView(challengeItem)
+                        }
+//                        view.CL.addView(challengeItem)
+                    }
+//                    var temp : Challenge = challenge!!.get(0)
+//
+//                    Log.d("msg", temp.toString())
+//
+//                    challengeItem=inflater.inflate(R.layout.wpqkf,null)
+//                    challengeItem.title.text=temp.name
+//                    challengeItem.content.text=temp.content
+//
+//                    view.CL.addView(challengeItem)
+
+//                    view.LH.addView(challengeItem)
+//                    LH.addView(challengeItem)
+
+//                    adapter.addItem(temp.name!!, temp.content!!, temp.runnerSum!!)
+
+//                    distanceText = findViewById(R.id.distance) as TextView
+//                    periodText = findViewById(R.id.period) as TextView
+//                    distanceText.text = challenge?.get(0)?.distance.toString() +"km"
+//                    periodText.text = challenge?.get(1)?.period.toString()
+                } else{
+                }
+            }
+
+            override fun onFailure(call: Call<List<Challenge>>, t: Throwable) {
+                Log.d("hi","hi")
+//                Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_SHORT).show()
+            }
+        })
+
+//        var view =  inflater.inflate(R.layout.fragment_club_challenge, container, false)
 
         view.challenge_main_img.setOnClickListener {
             val intent = Intent(activity, ClubChallengeMonthly50Activity::class.java)
@@ -50,25 +241,28 @@ class ClubChallengeFragment : Fragment() {
 //            view -> Log.d("challenge_main_img","Selected")
         }
 
-        view.first_challenge_layout.setOnClickListener {
-            val intent = Intent(activity, ClubChallengeMonthly50Activity::class.java)
-            startActivity(intent)
-        }
 
-        view.second_challenge_layout.setOnClickListener {
-            val intent = Intent(activity, ClubChallengeWeeklyActivity::class.java)
-            startActivity(intent)
-        }
 
-        view.third_challenge_layout.setOnClickListener {
-            val intent = Intent(activity, ClubChallengeMonthly100Activity::class.java)
-            startActivity(intent)
-        }
 
-        view.next_50_layout.setOnClickListener {
-            val intent = Intent(activity, ClubChallengeNextMonth50Activity::class.java)
-            startActivity(intent)
-        }
+//        view.first_challenge_layout.setOnClickListener {
+//            val intent = Intent(activity, ClubChallengeMonthly50Activity::class.java)
+//            startActivity(intent)
+//        }
+
+//        view.second_challenge_layout.setOnClickListener {
+//            val intent = Intent(activity, ClubChallengeWeeklyActivity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        view.third_challenge_layout.setOnClickListener {
+//            val intent = Intent(activity, ClubChallengeMonthly100Activity::class.java)
+//            startActivity(intent)
+//        }
+//
+//        view.next_50_layout.setOnClickListener {
+//            val intent = Intent(activity, ClubChallengeNextMonth50Activity::class.java)
+//            startActivity(intent)
+//        }
         return view
     }
 
