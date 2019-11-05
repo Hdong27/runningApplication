@@ -9,6 +9,7 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_setting.*
@@ -48,6 +49,11 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         ProfileImage.clipToOutline = true
         ProfileImage.requestLayout()
 
+        ProfileImage.setOnClickListener {
+            var tmp = android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            ProfileImage.setImageURI(tmp)
+        }
+
         ProfileGender.setOnClickListener {
             var d=Dialog(this)
             var gd=layoutInflater.inflate(R.layout.genderdialog,null)
@@ -81,6 +87,7 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
             var hp:NumberPicker=d.heightPicker
             hp.maxValue=270
             hp.minValue=100
+            Log.d("hereHW",heightVal.text.toString())
             hp.value=heightVal.text.toString().substring(0,(heightVal.text.toString().length)-3).toInt()
             var heights= Array<String>(171,{""})
             for (i in 100..270){
@@ -108,6 +115,7 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
             var wp:NumberPicker=d.weightPicker
             wp.maxValue=200
             wp.minValue=20
+            Log.d("hereW",weightVal.text.toString())
             wp.value=weightVal.text.toString().substring(0,(weightVal.text.toString().length)-3).toInt()
             var weights= Array<String>(181,{""})
             for (i in 20..200){
