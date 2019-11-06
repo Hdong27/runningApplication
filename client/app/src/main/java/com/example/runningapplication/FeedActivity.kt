@@ -5,8 +5,10 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.BitmapFactory
+import android.graphics.Color
 
 import android.graphics.Rect
+import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Base64
@@ -26,6 +28,9 @@ import kotlinx.android.synthetic.main.frienddialog.view.*
 import kotlinx.android.synthetic.main.item_feed.view.*
 
 import kotlinx.android.synthetic.main.item_friend.view.*
+import kotlinx.android.synthetic.main.item_record.view.*
+import kotlinx.android.synthetic.main.item_record.view.mapImage
+import kotlinx.android.synthetic.main.record_detail.view.*
 
 import retrofit2.Call
 import retrofit2.Callback
@@ -78,12 +83,31 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
                         var feeditem=inflater.inflate(R.layout.item_feed,null)
                         feeditem.username.text=record.userName.toString()
                         feeditem.feedDay.text=LocalDateTime.parse(record.running!!.endtime.toString()).toLocalDate().toString()
-                        feeditem.feedImage.setImageBitmap(
-                            BitmapFactory.decodeStream(
-                                ByteArrayInputStream(
-                                    Base64.decode(record.running!!.image.toString(), 0))))
+
+                        var bm=BitmapFactory.decodeStream(ByteArrayInputStream(Base64.decode(record.running!!.image.toString(), 0)))
+                        feeditem.feedImage.setImageBitmap(bm)
+
                         feeditem.feedDistance.text="%.2f".format(record.running!!.distance)
                         feeditem.feedTime.text = (if(hour<10) "0"+hour.toString() else hour.toString())+":"+ (if(minutes<10) "0"+minutes.toString() else minutes.toString()) + ":" +(if(seconds<10) "0"+seconds.toString() else seconds.toString())
+                        feeditem.setOnClickListener {
+                            var d= Dialog(this@FeedActivity)
+                            var dd=layoutInflater.inflate(R.layout.record_detail,null)
+                            dd.mapImage.setImageBitmap(bm)
+                            val displayRectangle = Rect()
+                            window.decorView.getWindowVisibleDisplayFrame(displayRectangle)
+                            val iconsize = (displayRectangle.width()*0.05f).toInt()
+                            val mapsize = (displayRectangle.width()*0.75f).toInt()
+                            dd.mapImage.layoutParams.height=mapsize
+                            dd.mapImage.layoutParams.width=mapsize
+                            dd.closeMap.layoutParams.height=iconsize
+                            dd.closeMap.layoutParams.width=iconsize
+                            dd.closeMap.setOnClickListener {
+                                d.dismiss()
+                            }
+                            d.setContentView(dd)
+                            d.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                            d.show()
+                        }
                         feedList.addView(feeditem)
                     }
                 }else{
