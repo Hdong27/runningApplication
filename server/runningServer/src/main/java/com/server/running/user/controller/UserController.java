@@ -11,14 +11,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.server.running.running.dto.FriendRunning;
-import com.server.running.running.dto.Running;
 import com.server.running.user.dto.Friend;
 import com.server.running.user.dto.TotalFriend;
+import com.server.running.user.dto.UHeight;
+import com.server.running.user.dto.UImage;
+import com.server.running.user.dto.UWeight;
 import com.server.running.user.dto.User;
 import com.server.running.user.service.UserService;
 
@@ -54,10 +55,22 @@ public class UserController {
 	}
 	
 	// 회원 정보 수정
-	@PutMapping("/updateUser.run")
-	public ResponseEntity<User> updateUser(@RequestBody User user){
-		log.debug("회원정보 수정 요청");
-		return new ResponseEntity<User>(userService.updateUser(user), HttpStatus.OK);
+	@PostMapping("/setProfileImage.run")
+	public ResponseEntity<Boolean> setImage(@RequestBody UImage uImage) {
+		log.debug("이미지 수정");
+		return new ResponseEntity<Boolean>(userService.setImage(uImage), HttpStatus.OK);
+	}
+	
+	@PostMapping("/setProfileHeight.run")
+	public ResponseEntity<Boolean> setHeight(@RequestBody UHeight uHeight) {
+		log.debug("이미지 수정");
+		return new ResponseEntity<Boolean>(userService.setHeight(uHeight), HttpStatus.OK);
+	}
+	
+	@PostMapping("/setProfileWeight.run")
+	public ResponseEntity<Boolean> setWeight(@RequestBody UWeight uWeight) {
+		log.debug("이미지 수정");
+		return new ResponseEntity<Boolean>(userService.setWeight(uWeight), HttpStatus.OK);
 	}
 	
 	// 회원 탈퇴

@@ -130,6 +130,8 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                 var tmpHeight=d.heightPicker.value.toString()+" cm"
                 var parameters = HashMap<String,Any>()
                 parameters.put("height",tmpHeight)
+                parameters.put("uid", settings.getInt("uid", 0))
+
                 server.setProfileHeight(parameters).enqueue(object :Callback<Boolean>{
                     override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                         if(response.body()==true){
@@ -175,6 +177,7 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                 var tmpWeight=d.weightPicker.value.toString()+" kg"
                 var parameters = HashMap<String,Any>()
                 parameters.put("weight",tmpWeight)
+                parameters.put("uid", settings.getInt("uid", 0))
                 server.setProfileWeight(parameters).enqueue(object :Callback<Boolean>{
                     override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                         if(response.body()==true){
@@ -253,6 +256,7 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                 var editor: SharedPreferences.Editor = settings.edit()
                 var parameters = HashMap<String,Any>()
                 parameters.put("profileImage", encodedImg)
+                parameters.put("uid", settings.getInt("uid", 0))
                 server.setProfileImage(parameters).enqueue(object :Callback<Boolean>{
                     override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                         if(response.body()==true){

@@ -5,6 +5,9 @@ import java.util.List;
 import com.server.running.running.dto.FriendRunning;
 import com.server.running.user.dto.Friend;
 import com.server.running.user.dto.TotalFriend;
+import com.server.running.user.dto.UHeight;
+import com.server.running.user.dto.UImage;
+import com.server.running.user.dto.UWeight;
 import com.server.running.user.dto.User;
 
 public interface UserService {
@@ -40,4 +43,10 @@ public interface UserService {
 
 	// 이동거리 조회
 	public double distance(Integer uid);
+
+	public Boolean setImage(UImage uImage);
+
+	public Boolean setHeight(UHeight uHeight);
+
+	public Boolean setWeight(UWeight uWeight);
 }

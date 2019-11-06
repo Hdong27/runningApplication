@@ -14,6 +14,9 @@ import com.server.running.running.dto.FriendRunning;
 import com.server.running.running.dto.Running;
 import com.server.running.user.dto.Friend;
 import com.server.running.user.dto.TotalFriend;
+import com.server.running.user.dto.UHeight;
+import com.server.running.user.dto.UImage;
+import com.server.running.user.dto.UWeight;
 import com.server.running.user.dto.User;
 import com.server.running.user.repository.UserRepository;
 import com.server.running.util.SecurityUtil;
@@ -191,5 +194,41 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		return dir;
+	}
+
+	@Override
+	public Boolean setImage(UImage uImage) {
+		Optional<User> maybeUser = userRepository.findById(uImage.getUid());
+		if(maybeUser.isPresent()) {
+			User user = maybeUser.get();
+			user.setImg(uImage.getImage());
+			userRepository.save(user);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean setHeight(UHeight uHeight) {
+		Optional<User> maybeUser = userRepository.findById(uHeight.getUid());
+		if(maybeUser.isPresent()) {
+			User user = maybeUser.get();
+			user.setHeight(uHeight.getHeight());
+			userRepository.save(user);
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public Boolean setWeight(UWeight uWeight) {
+		Optional<User> maybeUser = userRepository.findById(uWeight.getUid());
+		if(maybeUser.isPresent()) {
+			User user = maybeUser.get();
+			user.setWeight(uWeight.getWeight());
+			userRepository.save(user);
+			return true;
+		}
+		return false;
 	}
 }
