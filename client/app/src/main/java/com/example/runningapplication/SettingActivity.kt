@@ -135,16 +135,19 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                 server.setProfileHeight(parameters).enqueue(object :Callback<Boolean>{
                     override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                         if(response.body()==true){
+
                             heightVal.text=tmpHeight
                             editor.putString("height",tmpHeight)
+                            Toast.makeText(applicationContext, settings.getString("height","00000"),Toast.LENGTH_LONG).show()
+                            editor.commit()
                         }
                         else{
-                            Toast.makeText(applicationContext,"문제 발생", Toast.LENGTH_SHORT)
+                            Toast.makeText(applicationContext,"실패", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT)
+                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT).show()
                     }
                 })
                 d.dismiss()
@@ -183,14 +186,16 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                         if(response.body()==true){
                             weightVal.text=tmpWeight
                             editor.putString("height",tmpWeight)
+                            editor.commit()
+
                         }
                         else{
-                            Toast.makeText(applicationContext,"문제 발생", Toast.LENGTH_SHORT)
+                            Toast.makeText(applicationContext,"실패", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT)
+                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT).show()
                     }
                 })
                 d.dismiss()
@@ -262,14 +267,15 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                         if(response.body()==true){
                             ProfileImage.setImageBitmap(img)
                             editor.putString("img",encodedImg)
+                            editor.commit()
                         }
                         else{
-                            Toast.makeText(applicationContext,"문제 발생", Toast.LENGTH_SHORT)
+                            Toast.makeText(applicationContext,"이미지 업로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
                         }
                     }
 
                     override fun onFailure(call: Call<Boolean>, t: Throwable) {
-                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT)
+                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT).show()
                     }
                 })
             }
