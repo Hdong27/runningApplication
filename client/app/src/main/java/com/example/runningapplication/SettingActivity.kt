@@ -138,7 +138,6 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
 
                             heightVal.text=tmpHeight
                             editor.putString("height",tmpHeight)
-                            Toast.makeText(applicationContext, settings.getString("height","00000"),Toast.LENGTH_LONG).show()
                             editor.commit()
                         }
                         else{
@@ -185,9 +184,8 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                     override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                         if(response.body()==true){
                             weightVal.text=tmpWeight
-                            editor.putString("height",tmpWeight)
+                            editor.putString("weight",tmpWeight)
                             editor.commit()
-
                         }
                         else{
                             Toast.makeText(applicationContext,"실패", Toast.LENGTH_SHORT).show()
@@ -252,15 +250,23 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
             if(resultCode == Activity.RESULT_OK){
                 var imageUri = data!!.data
                 var imgStream = contentResolver.openInputStream(imageUri!!)
-                var img =BitmapFactory.decodeStream(imgStream)
 
-                while(img.width>500 && img.height>500){
-                    img.width/=2
-                    img.height/=2
+                var options = BitmapFactory.Options()
+                BitmapFactory.decodeStream(imgStream,null,options)
+                var width = options.outWidth
+                var height = options.outHeight
+                var samplesize = 1
+
+                while(width > 300 || height > 300){
+                    width/=2
+                    height/=2
+                    samplesize*=2
                 }
+                options.inSampleSize = samplesize
+                var img = BitmapFactory.decodeStream(imgStream,null,options)
 
                 var baos = ByteArrayOutputStream()
-                img.compress(Bitmap.CompressFormat.PNG,100,baos)
+                img!!.compress(Bitmap.CompressFormat.PNG,100,baos)
                 var encodedImg = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
 
                 var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
