@@ -253,6 +253,12 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                 var imageUri = data!!.data
                 var imgStream = contentResolver.openInputStream(imageUri!!)
                 var img =BitmapFactory.decodeStream(imgStream)
+
+                while(img.width>500 && img.height>500){
+                    img.width/=2
+                    img.height/=2
+                }
+
                 var baos = ByteArrayOutputStream()
                 img.compress(Bitmap.CompressFormat.PNG,100,baos)
                 var encodedImg = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
