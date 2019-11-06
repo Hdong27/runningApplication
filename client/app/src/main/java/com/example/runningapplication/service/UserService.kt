@@ -56,4 +56,21 @@ interface UserService {
         @Body param: HashMap<String, Any>
     ):Call<Boolean>
 
+    @POST("setProfileImage")
+    fun setProfileImage(
+        //Key : profileImage
+        @Body parameters: HashMap<String, Any>
+    ):Call<Boolean>
+
+    @POST("setProfileHeight")
+    fun setProfileHeight(
+        //Key : height
+        @Body parameters: HashMap<String, Any>
+    ):Call<Boolean>
+
+    @POST("setProfileWeight")
+    fun setProfileWeight(
+        //Key : weight
+        @Body parameters: HashMap<String, Any>
+    ):Call<Boolean>
 }

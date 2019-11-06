@@ -1,35 +1,58 @@
 package com.example.runningapplication
 
+import android.app.Activity
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Rect
 import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.OvalShape
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.MenuItem
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_setting.*
 import android.widget.NumberPicker
 import android.widget.RadioButton
+import android.widget.Toast
 import androidx.core.view.get
+import com.example.runningapplication.service.UserService
 import kotlinx.android.synthetic.main.genderdialog.*
 import kotlinx.android.synthetic.main.genderdialog.view.*
 import kotlinx.android.synthetic.main.heightdialog.*
 import kotlinx.android.synthetic.main.weightdialog.*
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.InputStream
+import java.lang.Exception
 
 class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigationItemSelectedListener{
+
+    val REQUEST_CODE = 0;
+
+    var retrofit = Retrofit.Builder()
+        .baseUrl("http://52.79.200.149:8080")
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+    var server = retrofit.create(UserService::class.java)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_setting)
-
         var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
         var editor: SharedPreferences.Editor = settings.edit()
-
         settingMenu.setOnNavigationItemSelectedListener(this)
         settingMenu.selectedItemId = R.id.setting
 
@@ -44,9 +67,23 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
         name.text=settings.getString("name","옹붐바바")
         heightVal.text=settings.getString("height","181 cm")
         weightVal.text=settings.getString("weight","70 kg")
+
+        if(!settings.getString("img","def").equals("null")){
+            ProfileImage.setImageBitmap(
+                BitmapFactory.decodeStream(
+                    ByteArrayInputStream(
+                        Base64.decode(settings.getString("img","def"), 0))))
+        }
         ProfileImage.background = ShapeDrawable(OvalShape())
         ProfileImage.clipToOutline = true
         ProfileImage.requestLayout()
+
+        ProfileImage.setOnClickListener {
+            var imageIntent = Intent()
+            imageIntent.setType("image/*")
+            imageIntent.setAction(Intent.ACTION_GET_CONTENT)
+            startActivityForResult(imageIntent, REQUEST_CODE)
+        }
 
         ProfileGender.setOnClickListener {
             var d=Dialog(this)
@@ -89,7 +126,25 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
             }
             hp.displayedValues=heights
             d.heightConfirm.setOnClickListener {
-                heightVal.text=d.heightPicker.value.toString()+" cm"
+
+                var tmpHeight=d.heightPicker.value.toString()+" cm"
+                var parameters = HashMap<String,Any>()
+                parameters.put("height",tmpHeight)
+                server.setProfileHeight(parameters).enqueue(object :Callback<Boolean>{
+                    override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                        if(response.body()==true){
+                            heightVal.text=tmpHeight
+                            editor.putString("height",tmpHeight)
+                        }
+                        else{
+                            Toast.makeText(applicationContext,"문제 발생", Toast.LENGTH_SHORT)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT)
+                    }
+                })
                 d.dismiss()
             }
             d.heightCancel.setOnClickListener {
@@ -117,7 +172,24 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
             }
             wp.displayedValues=weights
             d.weightConfirm.setOnClickListener {
-                weightVal.text=d.weightPicker.value.toString()+" kg"
+                var tmpWeight=d.weightPicker.value.toString()+" kg"
+                var parameters = HashMap<String,Any>()
+                parameters.put("weight",tmpWeight)
+                server.setProfileWeight(parameters).enqueue(object :Callback<Boolean>{
+                    override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                        if(response.body()==true){
+                            weightVal.text=tmpWeight
+                            editor.putString("height",tmpWeight)
+                        }
+                        else{
+                            Toast.makeText(applicationContext,"문제 발생", Toast.LENGTH_SHORT)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT)
+                    }
+                })
                 d.dismiss()
             }
             d.weightCancel.setOnClickListener {
@@ -162,5 +234,44 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
 
         }
         return true
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if(requestCode == REQUEST_CODE)
+        {
+            if(resultCode == Activity.RESULT_OK){
+                var imageUri = data!!.data
+                var imgStream = contentResolver.openInputStream(imageUri!!)
+                var img =BitmapFactory.decodeStream(imgStream)
+                var baos = ByteArrayOutputStream()
+                img.compress(Bitmap.CompressFormat.PNG,100,baos)
+                var encodedImg = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
+
+                var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
+                var editor: SharedPreferences.Editor = settings.edit()
+                var parameters = HashMap<String,Any>()
+                parameters.put("profileImage", encodedImg)
+                server.setProfileImage(parameters).enqueue(object :Callback<Boolean>{
+                    override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
+                        if(response.body()==true){
+                            ProfileImage.setImageBitmap(img)
+                            editor.putString("img",encodedImg)
+                        }
+                        else{
+                            Toast.makeText(applicationContext,"문제 발생", Toast.LENGTH_SHORT)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Boolean>, t: Throwable) {
+                        Toast.makeText(applicationContext,"통신 에러", Toast.LENGTH_SHORT)
+                    }
+                })
+            }
+            else if(resultCode == Activity.RESULT_CANCELED){
+
+            }
+        }
     }
 }
