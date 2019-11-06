@@ -48,6 +48,7 @@ class LoginActivity : AppCompatActivity() {
 
                             Log.d("user",user?.email.toString())
                             Log.d("user",user?.password.toString())
+                            Log.d("user",user?.img.toString())
                             editor.putInt("uid", user?.uid!!.toInt())
                             editor.putBoolean("AutoLogin",true)
                             editor.putString("name",user?.name.toString())
