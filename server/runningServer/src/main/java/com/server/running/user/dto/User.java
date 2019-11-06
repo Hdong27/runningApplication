@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -66,6 +67,7 @@ public class User {
 	private String gender;
 	
 	// 프로필 사진
+	@Lob
 	@Column
 	private String img;
 	

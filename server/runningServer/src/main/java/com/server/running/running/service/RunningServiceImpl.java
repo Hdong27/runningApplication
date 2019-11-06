@@ -26,6 +26,7 @@ public class RunningServiceImpl implements RunningService {
 	// 러닝 종료
 	@Override
 	public Running end(Running running) {
+		running.setDistance(running.getDistance() / 1000);
 		runningRepository.save(running);
 		return runningRepository.findById(running.getRid()).get();
 	}

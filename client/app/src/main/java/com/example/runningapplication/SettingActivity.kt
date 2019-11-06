@@ -255,7 +255,7 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                 var settings: SharedPreferences = getSharedPreferences("loginStatus", Context.MODE_PRIVATE)
                 var editor: SharedPreferences.Editor = settings.edit()
                 var parameters = HashMap<String,Any>()
-                parameters.put("profileImage", encodedImg)
+                parameters.put("image", encodedImg)
                 parameters.put("uid", settings.getInt("uid", 0))
                 server.setProfileImage(parameters).enqueue(object :Callback<Boolean>{
                     override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
