@@ -22,6 +22,7 @@ import android.widget.RadioButton
 import android.widget.Toast
 import androidx.core.view.get
 import com.example.runningapplication.service.UserService
+import kotlinx.android.synthetic.main.custom_challenge.*
 import kotlinx.android.synthetic.main.genderdialog.*
 import kotlinx.android.synthetic.main.genderdialog.view.*
 import kotlinx.android.synthetic.main.heightdialog.*
@@ -251,21 +252,18 @@ class SettingActivity : AppCompatActivity()  , BottomNavigationView.OnNavigation
                 var imageUri = data!!.data
                 var imgStream = contentResolver.openInputStream(imageUri!!)
 
-                var options = BitmapFactory.Options()
-                BitmapFactory.decodeStream(imgStream,null,options)
-                var width = options.outWidth
-                var height = options.outHeight
-                var samplesize = 1
+                var tmpImg = BitmapFactory.decodeStream(imgStream)
 
-                while(width > 300 || height > 300){
-                    width/=2
-                    height/=2
-                    samplesize*=2
-                }
-                options.inSampleSize = samplesize
-                var img = BitmapFactory.decodeStream(imgStream,null,options)
+                var img=Bitmap.createScaledBitmap(
+                    tmpImg,
+                Math.round(150/(tmpImg.height.toFloat()/tmpImg.width.toFloat())),
+                    150,
+                    false
+                )
 
                 var baos = ByteArrayOutputStream()
+                Log.d("here?", imageUri.toString())
+                Log.d("here?", img.toString())
                 img!!.compress(Bitmap.CompressFormat.PNG,100,baos)
                 var encodedImg = Base64.encodeToString(baos.toByteArray(), Base64.DEFAULT)
 
