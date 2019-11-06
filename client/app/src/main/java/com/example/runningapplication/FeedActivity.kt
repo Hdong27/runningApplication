@@ -92,7 +92,7 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
 
             override fun onFailure(call: Call<List<FriendsRecord>>, t: Throwable) {
                 Log.d("hi","hi")
-                Toast.makeText(applicationContext, "로그인 실패", Toast.LENGTH_LONG).show()
+                Toast.makeText(applicationContext, "실패", Toast.LENGTH_LONG).show()
             }
         })
 
@@ -127,7 +127,12 @@ class FeedActivity : AppCompatActivity() , BottomNavigationView.OnNavigationItem
                                             call: Call<Boolean>,
                                             response: Response<Boolean>
                                         ) {
-                                            d.dismiss()
+                                            if(response.body()!!) {
+                                                d.dismiss()
+                                                Toast.makeText(applicationContext, "친구가 추가되었습니다.", Toast.LENGTH_SHORT).show()
+                                            } else {
+                                                Toast.makeText(applicationContext, "이미 친구입니다.", Toast.LENGTH_SHORT).show()
+                                            }
                                         }
 
                                         override fun onFailure(call: Call<Boolean>, t: Throwable) {

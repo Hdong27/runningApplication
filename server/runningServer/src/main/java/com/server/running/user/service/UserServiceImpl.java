@@ -109,6 +109,12 @@ public class UserServiceImpl implements UserService {
 	public Boolean addFriend(Friend friend) {
 		User user = userRepository.findByEmail(friend.getUser()).get();
 		Optional<User> fri = userRepository.findByEmail(friend.getEmail());
+		if(user.getUid() == fri.get().getUid()) return false;
+		for (User temp : user.getFriends()) {
+			if(fri.get().getUid() == temp.getUid()) {
+				return false;
+			}
+		}
 		user.addFriends(fri.get());
 		fri.get().addFriends(user);
 		userRepository.save(user);
